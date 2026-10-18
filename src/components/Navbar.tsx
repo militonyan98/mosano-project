@@ -3,6 +3,7 @@
 import React from "react";
 import { trackCTAClick } from "@/lib/analytics";
 import { ArrowUpRight, Sparkles } from "lucide-react";
+import { MosanoLogo } from "./MosanoLogo";
 
 interface NavbarProps {
   currency: "EUR" | "USD";
@@ -26,72 +27,11 @@ export const Navbar: React.FC<NavbarProps> = ({
           className="flex items-center gap-3 group"
         >
           <div className="relative flex items-center">
-            {/* Custom SVG Monogram reflecting Mosano geometric M with magenta accent */}
-            <svg
-              width="36"
-              height="34"
-              viewBox="0 0 36 34"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              className="transition-transform group-hover:scale-105"
-            >
-              <path
-                d="M4 30V4L15 19L18 14L8 4H4"
-                fill="#1E22AA"
-              />
-              <path
-                d="M18 14L22 8L32 23V30H27V16L18 29L12 21L15 17L18 21L27 9V4L18 14Z"
-                fill="#1E22AA"
-              />
-              {/* Vibrant Magenta signature accent stroke */}
-              <path
-                d="M22 8L32 23H26L18 11L22 8Z"
-                fill="#E31C79"
-              />
-            </svg>
-            <span className="ml-2.5 text-2xl font-black tracking-tight text-mosano-navy">
-              MOSANO
-            </span>
+            <MosanoLogo height={28} className="transition-transform group-hover:scale-105" />
           </div>
-          <span className="hidden sm:inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-mosano-surface text-mosano-blue border border-mosano-blue/20">
-            2026 Cost Guide
-          </span>
         </a>
 
-        {/* Quick Nav Anchors */}
-        <nav className="hidden md:flex items-center gap-6 text-sm font-medium text-mosano-navy/80">
-          <a
-            href="#budget-calculator"
-            className="hover:text-mosano-blue transition-colors text-mosano-blue font-semibold flex items-center gap-1.5"
-          >
-            <Sparkles className="w-3.5 h-3.5 text-mosano-magenta" />
-            <span>Budget Calculator</span>
-          </a>
-          <a
-            href="#cost-drivers"
-            className="hover:text-mosano-blue transition-colors"
-          >
-            Cost Drivers
-          </a>
-          <a
-            href="#hidden-traps"
-            className="hover:text-mosano-blue transition-colors"
-          >
-            Hidden Traps
-          </a>
-          <a
-            href="#methodology"
-            className="hover:text-mosano-blue transition-colors"
-          >
-            Methodology
-          </a>
-          <a
-            href="#faq"
-            className="hover:text-mosano-blue transition-colors"
-          >
-            FAQ
-          </a>
-        </nav>
+
 
         {/* Right Actions: Currency Toggle & Scoping CTA */}
         <div className="flex items-center gap-3">

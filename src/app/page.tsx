@@ -108,7 +108,7 @@ export default function LandingPage() {
       <Hero onOpenContact={handleOpenGeneralContact} />
 
       {/* Calculator Section immediately following Hero */}
-      <section className="relative -mt-6 sm:-mt-10 mb-16 lg:mb-24 z-20">
+      <section className="relative -mt-8 sm:-mt-12 z-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <BudgetPlanner
             currency={currency}
@@ -123,7 +123,7 @@ export default function LandingPage() {
       </section>
 
       {/* Expanded In-Depth Cost Guide & Benchmarks */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20 w-full flex-grow">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 sm:pt-20 pb-16 sm:pb-20 w-full flex-grow">
         <CostGuideContent
           currency={currency}
           onOpenContact={handleOpenGeneralContact}

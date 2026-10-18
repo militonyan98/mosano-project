@@ -203,7 +203,7 @@ export const ContactFormModal: React.FC<ContactFormModalProps> = ({
                 Discuss Your MVP with Mosano
               </h3>
               <p className="text-xs sm:text-sm text-mosano-navy/70 mt-1 leading-relaxed">
-                Connect with our senior engineering team in Portugal. No sales pitches—just real technical architecture, scope validation, and timelines.
+                Connect with our senior engineering team at Mosano. No sales pitches—just real technical architecture, scope validation, and timelines.
               </p>
 
               {/* Scope Snapshot Badge if user came from planner */}

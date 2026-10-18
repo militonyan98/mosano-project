@@ -10,8 +10,10 @@ interface NavSection {
 const SECTIONS: NavSection[] = [
   { id: "overview", label: "Overview" },
   { id: "budget-calculator", label: "Budget Calculator" },
-  { id: "cost-drivers", label: "Cost Drivers" },
+  { id: "cost-drivers", label: "Cost Benchmarks" },
+  { id: "platform-comparison", label: "Platform Comparison" },
   { id: "hidden-traps", label: "Hidden Traps" },
+  { id: "scoping-framework", label: "Scope Discipline" },
   { id: "methodology", label: "Methodology" },
   { id: "faq", label: "FAQ" },
 ];
@@ -21,13 +23,18 @@ export const SideDotNav: React.FC = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      const scrollPosition = window.scrollY + 260; // offset for navbar and viewport middle
+      // If near the very top of the page, always highlight Overview
+      if (window.scrollY < 200) {
+        setActiveSection("overview");
+        return;
+      }
 
+      const headerOffset = 100;
       for (let i = SECTIONS.length - 1; i >= 0; i--) {
         const section = document.getElementById(SECTIONS[i].id);
         if (section) {
-          const top = section.offsetTop;
-          if (scrollPosition >= top) {
+          const rect = section.getBoundingClientRect();
+          if (rect.top <= headerOffset + 50) {
             setActiveSection(SECTIONS[i].id);
             break;
           }
@@ -44,7 +51,15 @@ export const SideDotNav: React.FC = () => {
   const scrollToSection = (id: string) => {
     const el = document.getElementById(id);
     if (el) {
-      el.scrollIntoView({ behavior: "smooth" });
+      const headerOffset = 88;
+      const elementPosition = el.getBoundingClientRect().top + window.scrollY;
+      const offsetPosition = elementPosition - headerOffset;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth",
+      });
+      setActiveSection(id);
     }
   };
 

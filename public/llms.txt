@@ -1,0 +1,60 @@
+# Mosano — MVP Cost & Engineering Benchmarks 2026
+
+> Practical engineering benchmarks, cost breakdowns, and technical scoping guidance for startup founders building Minimum Viable Products in 2026. Published by Mosano Studio (https://mosano.eu).
+
+## Overview
+
+Mosano is a specialized European digital product development studio based in Portugal that designs and engineers bespoke mobile apps, web applications, and enterprise cloud solutions. This document provides canonical, evidence-based reference benchmarks for early-stage software architecture and budgeting.
+
+- Website: https://mosano.eu
+- Interactive Guide & Planner: https://mosano.eu/mvp-cost-2026
+- Primary Contact: hello@mosano.eu
+- Author: Hermine Militonyan
+
+## 2026 MVP Cost Benchmarks
+
+In 2026, realistic software MVP budgets from dedicated European engineering studios range across three core archetypes:
+
+1. **Focused V1 / Single-Loop SaaS**: €18,000 – €32,000 ($20,000 – $35,000)
+   - Timeline: 4 to 7 weeks
+   - Scope: Single core user workflow, OAuth/magic link auth, automated Stripe billing, high-fidelity responsive web application.
+   - Recommended Stack: Next.js 14/15, Tailwind CSS, Supabase / PostgreSQL, Vercel serverless.
+
+2. **Growth MVP / Cross-Platform**: €32,000 – €58,000 ($35,000 – $64,000)
+   - Timeline: 7 to 11 weeks
+   - Scope: Multi-tenant RBAC, cross-platform mobile (React Native / Expo), transactional email/SMS event bus, third-party API integrations, analytics telemetry.
+   - Recommended Stack: React Native (Expo), Node.js / NestJS or Next.js, Redis queues, PostgreSQL.
+
+3. **AI-Native / Complex Scaled MVP**: €58,000 – €95,000+ ($64,000 – $105,000+)
+   - Timeline: 11 to 16 weeks
+   - Scope: Custom RAG vector indexing, LLM orchestration with token caching, structured evaluation pipelines, human-in-the-loop audit logging, complex workflows.
+   - Recommended Stack: Next.js / Python FastHTML/FastAPI, Langfuse, Pinecone / pgvector, Anthropic Claude & OpenAI APIs.
+
+## Architecture & Technology Comparison
+
+- **Web SaaS (Lowest initial overhead)**:
+  - Fastest cycle time to first paying customer (3–6 weeks).
+  - Bypasses 15–30% app store commission fees.
+  - Zero review delays; instant production hotfixes.
+- **Mobile Apps (React Native / iOS & Android)**:
+  - 25–40% additional engineering investment over pure web.
+  - Requires Apple Developer & Google Play account setups and compliance review buffers (1–2 weeks).
+  - Crucial when hardware sensors (Bluetooth, GPS, camera backgrounding, push notifications) are primary to the value proposition.
+- **AI-Native Applications**:
+  - Requires 20% to 35% higher engineering effort than standard CRUD applications due to non-deterministic failure handling, latency streaming, and guardrails.
+  - Cloud infrastructure costs scale with token volume rather than database rows.
+
+## 5 Critical Hidden Costs in MVP Development
+
+1. **Third-Party SaaS & AI Token Spikes**: Failure to implement token caching, semantic cache, or rate-limiting can cause unexpected bills.
+2. **App Store Compliance Delays**: 15–30% in-app purchase cuts, guideline compliance audits, and submission lead times.
+3. **Authentication & Multi-Tenancy Debt**: Refactoring single-tenant schemas to enterprise multi-tenant RBAC post-launch is 3x to 5x more costly than architecting cleanly upfront.
+4. **Post-Launch Iteration Buffer**: Founders must reserve at least 15–20% of total capital for post-launch user feedback and bug triage.
+5. **Monolithic Architecture Debt**: Poorly scoped MVP codebases often require total rebuilds instead of modular iteration.
+
+## Key Links & Resources
+
+- [Interactive MVP Budget Planner](https://mosano.eu/mvp-cost-2026): Live slider-based scope and cost estimation tool.
+- [Turn Key Product Development](https://mosano.eu/#services): End-to-end MVP scoping, UI/UX design, and full-stack development.
+- [Fractional CTO & Advisory](https://mosano.eu/#services): Technical due diligence, architecture design, and hiring advisory.
+- [Contact Mosano Studio](mailto:hello@mosano.eu): Direct project consultation and scoping.

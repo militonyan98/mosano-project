@@ -3,15 +3,18 @@ import Script from "next/script";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "How Much Does It Cost to Build an MVP in 2026? A Founder's Practical Guide & Budget Planner | Mosano",
+  title: "How Much Does It Cost to Build an MVP in 2026? | Mosano",
   description:
-    "Evidence-based MVP development cost guide and interactive budget planner for startup founders in 2026. Compare Web SaaS, Mobile, and AI-native costs, avoid hidden infrastructure traps, and scope version one.",
+    "Evidence-based 2026 MVP development cost guide & budget planner for founders. Compare Web, Mobile & AI costs, avoid hidden traps, and scope your version 1.",
+  alternates: {
+    canonical: "https://mosano.eu/mvp-cost-2026",
+  },
   keywords: [
     "MVP cost 2026",
     "how much to build an MVP",
     "MVP budget planner",
     "startup MVP development cost",
-    "software development studio Portugal",
+    "software development studio",
     "AI MVP cost",
     "Mosano software studio",
   ],
@@ -19,9 +22,9 @@ export const metadata: Metadata = {
   creator: "Mosano",
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://mosano.eu"),
   openGraph: {
-    title: "How Much Does It Cost to Build an MVP in 2026? Interactive Budget Planner",
+    title: "How Much Does It Cost to Build an MVP in 2026? | Mosano",
     description:
-      "Avoid agency bloat and unbudgeted cloud surprises. Real 2026 software engineering benchmarks, platform cost trade-offs, and an interactive scope calculator.",
+      "Evidence-based 2026 MVP development cost guide & budget planner for founders. Compare Web, Mobile & AI costs, avoid hidden traps, and scope your version 1.",
     url: "https://mosano.eu/mvp-cost-2026",
     siteName: "Mosano — Mobile & Web Development Studio",
     locale: "en_US",
@@ -31,7 +34,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "How Much Does It Cost to Build an MVP in 2026? | Mosano",
     description:
-      "Real software development cost benchmarks & interactive budget planner for startup founders.",
+      "Evidence-based 2026 MVP development cost guide & budget planner for founders. Compare Web, Mobile & AI costs, avoid hidden traps, and scope your version 1.",
     creator: "@mosanostudio",
   },
   robots: {
@@ -87,7 +90,7 @@ export default function RootLayout({
             "name": "How much should a startup budget for an MVP in 2026?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "In 2026, a realistic budget for a well-engineered MVP built by a dedicated European studio ranges from €18,000 to €58,000. Simpler single-workflow SaaS apps typically launch between €18,000 and €32,000, while AI-powered or cross-platform mobile apps range between €32,000 and €58,000.",
+              "text": "In 2026, a realistic budget for a well-engineered MVP built by Mosano ranges from €18,000 to €58,000. Simpler single-workflow SaaS apps typically launch between €18,000 and €32,000, while AI-powered or cross-platform mobile apps range between €32,000 and €58,000.",
             },
           },
           {

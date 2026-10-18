@@ -192,22 +192,26 @@ export const BudgetPlanner: React.FC<BudgetPlannerProps> = ({
   return (
     <div
       id="budget-calculator"
-      className="bg-white rounded-3xl border border-mosano-border/80 shadow-mosano-card overflow-hidden"
+      className="scroll-mt-24 bg-white rounded-3xl border-2 border-mosano-blue/20 shadow-mosano-hover overflow-hidden transition-all"
     >
       {/* Header bar */}
-      <div className="px-6 py-6 sm:px-8 sm:py-7 bg-mosano-surface/60 border-b border-mosano-border/60 flex items-center justify-between flex-wrap gap-4">
-        <div>
-          <h3 className="text-2xl font-black text-mosano-navy tracking-tight">
+      <div className="px-6 py-6 sm:px-8 sm:py-7 bg-gradient-to-r from-mosano-surface via-white to-mosano-surface border-b border-mosano-border/80 flex items-center justify-between flex-wrap gap-4">
+        <div className="space-y-1">
+          <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-mosano-blue/10 text-mosano-blue font-bold text-[11px] uppercase tracking-wider">
+            <Sparkles className="w-3 h-3 text-mosano-magenta" />
+            <span>Interactive Estimator</span>
+          </div>
+          <h3 className="text-2xl sm:text-3xl font-black text-mosano-navy tracking-tight">
             MVP Budget Calculator
           </h3>
-          <p className="text-sm text-mosano-navy/70 mt-1">
-            Adjust the sliders below to calibrate your software scope, production timeline, and investment bracket.
+          <p className="text-xs sm:text-sm text-mosano-navy/70">
+            Calibrate your MVP scope, target platforms, and AI complexity for real-time cost brackets.
           </p>
         </div>
 
         <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white border border-mosano-border text-xs font-semibold text-mosano-navy shadow-sm">
           <Clock className="w-3.5 h-3.5 text-mosano-blue" />
-          <span>Real-time calculation</span>
+          <span>Instant 2026 Studio Model</span>
         </div>
       </div>
 
@@ -414,7 +418,7 @@ export const BudgetPlanner: React.FC<BudgetPlannerProps> = ({
                   }}
                   className="w-full py-3.5 px-4 rounded-xl bg-mosano-magenta hover:bg-pink-600 text-white font-bold text-sm transition-all shadow-md flex items-center justify-center gap-2 group active:scale-[0.99]"
                 >
-                  <span>discuss this scope with mosano</span>
+                  <span>discuss your mvp</span>
                   <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
                 </button>
 

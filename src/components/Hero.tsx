@@ -5,12 +5,8 @@ import { trackCTAClick } from "@/lib/analytics";
 import {
   Sparkles,
   ArrowDown,
-  ShieldCheck,
   CheckCircle,
-  Zap,
-  Layers,
   ChevronRight,
-  TrendingUp,
 } from "lucide-react";
 
 interface HeroProps {
@@ -19,7 +15,7 @@ interface HeroProps {
 
 export const Hero: React.FC<HeroProps> = ({ onOpenContact }) => {
   return (
-    <section id="overview" className="scroll-mt-24 relative overflow-hidden pt-12 pb-16 lg:pt-20 lg:pb-24 bg-gradient-to-b from-white via-mosano-surface/50 to-white">
+    <section id="overview" className="scroll-mt-24 relative overflow-hidden py-16 lg:py-24 bg-gradient-to-b from-white via-mosano-surface/40 to-white">
       {/* Decorative Brand Rotated Rectangles matching Mosano brand identity (.left-rec / .right-rec) */}
       <div
         className="absolute -top-12 -right-16 w-64 h-64 opacity-15 rounded-3xl transform rotate-12 pointer-events-none"
@@ -37,174 +33,145 @@ export const Hero: React.FC<HeroProps> = ({ onOpenContact }) => {
       />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-          {/* Left Column: Headline & Value Proposition */}
-          <div className="lg:col-span-7 space-y-6">
-            {/* Category / Campaign Cap */}
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-mosano-surface border border-mosano-magenta/30 shadow-sm">
-              <span className="w-2 h-2 rounded-full bg-mosano-magenta" />
-              <span className="text-xs font-bold text-mosano-magenta tracking-wide uppercase">
-                2026 Founder Guide &amp; Budget Planner
-              </span>
+        {/* Headline & Value Proposition */}
+        <div className="text-center space-y-6">
+          {/* Main Headline */}
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-mosano-navy tracking-tight leading-[1.12] max-w-4xl mx-auto">
+            How Much Does It Cost to Build an MVP in <span className="text-mosano-blue underline decoration-mosano-yellow decoration-4 underline-offset-4">2026?</span>
+          </h1>
+
+          <p className="text-base sm:text-lg text-mosano-navy/75 font-normal leading-relaxed max-w-2xl mx-auto">
+            Real engineering benchmarks and an interactive scope calculator. Compare Web, Mobile, and AI budgets without generic agency markups.
+          </p>
+
+          {/* Scannable Benefits */}
+          <div className="flex flex-wrap items-center justify-center gap-2.5 pt-1 text-xs text-mosano-navy/80 font-medium max-w-3xl mx-auto">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white border border-mosano-border/80 shadow-sm hover:border-mosano-blue/40 transition-colors">
+              <CheckCircle className="w-3.5 h-3.5 text-emerald-600 flex-shrink-0" />
+              Real 2026 benchmarks
+            </span>
+            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white border border-mosano-border/80 shadow-sm hover:border-mosano-blue/40 transition-colors">
+              <CheckCircle className="w-3.5 h-3.5 text-emerald-600 flex-shrink-0" />
+              Web vs. Mobile vs. AI-Native
+            </span>
+            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white border border-mosano-border/80 shadow-sm hover:border-mosano-blue/40 transition-colors">
+              <CheckCircle className="w-3.5 h-3.5 text-emerald-600 flex-shrink-0" />
+              5 hidden cost drivers
+            </span>
+            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white border border-mosano-border/80 shadow-sm hover:border-mosano-blue/40 transition-colors">
+              <CheckCircle className="w-3.5 h-3.5 text-emerald-600 flex-shrink-0" />
+              100% IP ownership
+            </span>
+          </div>
+
+          {/* Action Buttons */}
+          <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
+            <a
+              href="#budget-calculator"
+              onClick={() => trackCTAClick("hero", "use_budget_planner")}
+              className="px-6 py-3.5 rounded-xl bg-mosano-blue hover:bg-mosano-navy text-white font-bold text-sm sm:text-base transition-all shadow-md hover:shadow-mosano-hover flex items-center gap-2 group active:scale-95"
+            >
+              <Sparkles className="w-4 h-4 text-mosano-yellow" />
+              <span>Launch Budget Calculator</span>
+              <ChevronRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+            </a>
+
+            <a
+              href="#cost-drivers"
+              onClick={() => trackCTAClick("hero", "read_cost_guide")}
+              className="px-5 py-3.5 rounded-xl bg-white hover:bg-mosano-surface border border-mosano-border text-mosano-navy font-bold text-sm transition-all shadow-sm flex items-center gap-2 active:scale-95"
+            >
+              <span>Explore Cost Drivers</span>
+              <ArrowDown className="w-3.5 h-3.5 text-mosano-blue" />
+            </a>
+          </div>
+
+          {/* Clean Proof Bar: inline next to each other */}
+          <div className="pt-3 flex flex-wrap items-center justify-center gap-3 sm:gap-6 text-xs text-mosano-navy/70 max-w-2xl mx-auto">
+            <div className="flex items-center gap-1.5 whitespace-nowrap">
+              <span className="font-bold text-mosano-navy">4–12 WEEKS</span>
+              <span>Average delivery</span>
             </div>
-
-            {/* Main Headline */}
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-mosano-navy tracking-tight leading-[1.12]">
-              How Much Does It Cost to Build an MVP in <span className="text-mosano-blue underline decoration-mosano-magenta decoration-4 underline-offset-8">2026?</span>
-            </h1>
-
-            <p className="text-lg sm:text-xl text-mosano-navy/80 font-normal leading-relaxed max-w-2xl">
-              A founder’s practical, evidence-based guide and interactive budget planner. Stop guessing with generic agency quotes: evaluate platform differences, eliminate hidden infrastructure traps, and scope your version one for validated traction.
-            </p>
-
-            {/* Quick Benefits Bullet Points */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2 text-sm text-mosano-navy/90 font-medium">
-              <div className="flex items-center gap-2.5">
-                <CheckCircle className="w-4 h-4 text-emerald-600 flex-shrink-0" />
-                <span>Zero fluff, real engineering benchmarks</span>
-              </div>
-              <div className="flex items-center gap-2.5">
-                <CheckCircle className="w-4 h-4 text-emerald-600 flex-shrink-0" />
-                <span>Web vs. Mobile vs. AI-Native breakdown</span>
-              </div>
-              <div className="flex items-center gap-2.5">
-                <CheckCircle className="w-4 h-4 text-emerald-600 flex-shrink-0" />
-                <span>Uncovers 5 hidden costs before you build</span>
-              </div>
-              <div className="flex items-center gap-2.5">
-                <CheckCircle className="w-4 h-4 text-emerald-600 flex-shrink-0" />
-                <span>Transparent scoping without binding lock-in</span>
-              </div>
+            <span className="text-mosano-navy/40">•</span>
+            <div className="flex items-center gap-1.5 whitespace-nowrap">
+              <span className="font-bold text-mosano-navy">100% IP</span>
+              <span>Direct ownership</span>
             </div>
-
-            {/* Action Buttons */}
-            <div className="flex flex-wrap items-center gap-4 pt-4">
-              <a
-                href="#budget-calculator"
-                onClick={() => trackCTAClick("hero", "use_budget_planner")}
-                className="px-6 py-3.5 rounded-xl bg-mosano-blue hover:bg-mosano-navy text-white font-bold text-base transition-all shadow-lg hover:shadow-mosano-hover flex items-center gap-2 group"
-              >
-                <Sparkles className="w-4 h-4 text-mosano-yellow" />
-                <span>launch budget planner</span>
-                <ChevronRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-              </a>
-
-              <a
-                href="#cost-drivers"
-                onClick={() => trackCTAClick("hero", "read_cost_guide")}
-                className="px-5 py-3.5 rounded-xl bg-white hover:bg-mosano-surface border-2 border-mosano-border text-mosano-navy font-bold text-sm transition-all flex items-center gap-2"
-              >
-                <span>explore 2026 cost drivers</span>
-                <ArrowDown className="w-4 h-4 text-mosano-blue" />
-              </a>
-            </div>
-
-            {/* Proof bar */}
-            <div className="pt-6 border-t border-mosano-border/70 flex flex-wrap items-center gap-6 text-xs text-mosano-navy/70">
-              <div className="flex items-center gap-2">
-                <span className="font-black text-mosano-navy text-sm">4–12 WEEKS</span>
-                <span>Average MVP delivery</span>
-              </div>
-              <span className="hidden sm:inline text-gray-300">•</span>
-              <div className="flex items-center gap-2">
-                <span className="font-black text-mosano-navy text-sm">100% IP</span>
-                <span>Direct client ownership</span>
-              </div>
-              <span className="hidden sm:inline text-gray-300">•</span>
-              <div className="flex items-center gap-2">
-                <span className="font-black text-mosano-navy text-sm">PORTUGAL HQ</span>
-                <span>Global tech delivery</span>
-              </div>
+            <span className="text-mosano-navy/40">•</span>
+            <div className="flex items-center gap-1.5 whitespace-nowrap">
+              <span className="font-bold text-mosano-navy">MOSANO</span>
+              <span>Global delivery</span>
             </div>
           </div>
 
-          {/* Right Column: Mosano Signature Brand Visual (Glassmorphic 3D Card Composition) */}
-          <div className="lg:col-span-5 relative">
-            {/* Background glowing frame */}
-            <div className="absolute inset-0 bg-gradient-to-tr from-mosano-blue/20 via-mosano-magenta/15 to-transparent rounded-3xl blur-2xl transform scale-95" />
+          {/* Authentic Studio Photo - Enhanced Size & Clean Visual Appeal */}
+          <div className="pt-6 relative group w-full">
+            {/* Ambient colorful backdrop glow matching Mosano brand identity */}
+            <div className="absolute inset-0 bg-gradient-to-r from-mosano-blue via-mosano-magenta to-mosano-yellow rounded-3xl opacity-25 blur-xl group-hover:opacity-40 transition duration-700 pointer-events-none" />
 
-            <div className="relative bg-white/80 backdrop-blur-xl border-2 border-white rounded-3xl p-6 sm:p-8 shadow-2xl space-y-6">
-              {/* Header badge inside visual */}
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <div className="w-3 h-3 rounded-full bg-mosano-blue" />
-                  <div className="w-3 h-3 rounded-full bg-mosano-magenta" />
-                  <div className="w-3 h-3 rounded-full bg-mosano-yellow" />
-                </div>
-                <span className="text-[11px] font-bold text-mosano-navy/60 uppercase tracking-wider">
-                  Mosano Architecture Benchmarks
-                </span>
-              </div>
+            <div className="relative overflow-hidden rounded-3xl border border-white/60 shadow-2xl bg-mosano-navy w-full">
+              <img
+                src="/mosano-studio-team.jpg"
+                alt="Mosano software engineering and product design team collaborating in the studio"
+                className="w-full h-80 sm:h-[460px] lg:h-[540px] xl:h-[580px] object-cover object-center transform transition-transform duration-1000 group-hover:scale-105"
+                loading="eager"
+              />
+              {/* Mosano subtle vignette overlay */}
+              <div className="absolute inset-0 bg-gradient-to-t from-mosano-navy/60 via-transparent to-transparent pointer-events-none" />
+            </div>
+          </div>
 
-              {/* Central Graphic: Cost & Velocity Matrix */}
-              <div className="bg-mosano-navy text-white rounded-2xl p-5 relative overflow-hidden">
-                <div className="flex items-center justify-between text-xs text-mosano-mint mb-3 font-mono">
-                  <span>SYSTEM_HEALTH: NOMINAL</span>
-                  <span>VELOCITY: FAST</span>
-                </div>
+          {/* KEY TAKEAWAYS Snippet - Distinct container */}
+          <div className="mt-8 text-left rounded-2xl bg-white border-2 border-mosano-blue/20 shadow-md overflow-hidden transition-all">
+            {/* Header bar */}
+            <div className="p-4 sm:px-6 bg-gradient-to-r from-mosano-surface via-white to-mosano-surface border-b border-mosano-border/80 flex items-center gap-2">
+              <span className="w-2.5 h-2.5 rounded-full bg-mosano-magenta" />
+              <h2 className="text-xs sm:text-sm font-bold uppercase tracking-wider text-mosano-navy">
+                KEY TAKEAWAYS
+              </h2>
+            </div>
 
-                <div className="space-y-3">
+            {/* Snippet Content */}
+            <div className="p-5 sm:p-6 space-y-4 text-xs sm:text-sm">
+              {/* Direct self-contained citable passage */}
+              <p className="text-mosano-navy/85 leading-relaxed font-normal">
+                Building a production-ready software Minimum Viable Product (MVP) in 2026 typically costs between <strong>€18,000 and €58,000</strong> with a delivery timeframe of <strong>4 to 12 weeks</strong> when engineered by Mosano. Pricing scales with multi-platform scope, database architecture, and AI integration depth.
+              </p>
+
+              {/* Structured bulleted takeaways */}
+              <ul className="grid grid-cols-1 md:grid-cols-2 gap-3 pt-1 text-mosano-navy/80">
+                <li className="flex items-start gap-2.5 p-3 rounded-xl bg-mosano-surface/50 border border-mosano-border/50">
+                  <span className="w-1.5 h-1.5 rounded-full bg-mosano-blue mt-1.5 flex-shrink-0" />
                   <div>
-                    <div className="flex justify-between text-xs text-white/70 mb-1">
-                      <span>Core Product Architecture</span>
-                      <span className="text-mosano-yellow font-bold">100%</span>
-                    </div>
-                    <div className="w-full bg-white/10 h-2 rounded-full overflow-hidden">
-                      <div className="bg-mosano-yellow h-full rounded-full w-full" />
-                    </div>
+                    <strong className="text-mosano-navy font-semibold block">Web SaaS V1: €18,000 – €32,000</strong>
+                    <span className="text-xs">4 to 7 weeks • Next.js, TypeScript, and Supabase for rapid revenue validation.</span>
                   </div>
+                </li>
 
+                <li className="flex items-start gap-2.5 p-3 rounded-xl bg-mosano-surface/50 border border-mosano-border/50">
+                  <span className="w-1.5 h-1.5 rounded-full bg-mosano-magenta mt-1.5 flex-shrink-0" />
                   <div>
-                    <div className="flex justify-between text-xs text-white/70 mb-1">
-                      <span>Automated CI/CD &amp; Testing</span>
-                      <span className="text-mosano-mint font-bold">94%</span>
-                    </div>
-                    <div className="w-full bg-white/10 h-2 rounded-full overflow-hidden">
-                      <div className="bg-mosano-mint h-full rounded-full w-[94%]" />
-                    </div>
+                    <strong className="text-mosano-navy font-semibold block">Cross-Platform Mobile + Web: €32,000 – €58,000</strong>
+                    <span className="text-xs">7 to 11 weeks • React Native &amp; Node microservices for unified iOS, Android, and web.</span>
                   </div>
+                </li>
 
+                <li className="flex items-start gap-2.5 p-3 rounded-xl bg-mosano-surface/50 border border-mosano-border/50">
+                  <span className="w-1.5 h-1.5 rounded-full bg-mosano-violet mt-1.5 flex-shrink-0" />
                   <div>
-                    <div className="flex justify-between text-xs text-white/70 mb-1">
-                      <span>AI Model / API Pipeline</span>
-                      <span className="text-mosano-magenta font-bold">88%</span>
-                    </div>
-                    <div className="w-full bg-white/10 h-2 rounded-full overflow-hidden">
-                      <div className="bg-mosano-magenta h-full rounded-full w-[88%]" />
-                    </div>
+                    <strong className="text-mosano-navy font-semibold block">AI-Native Systems: €58,000 – €95,000+</strong>
+                    <span className="text-xs">11 to 16 weeks • Custom RAG pipelines, vector caching, agentic evals, and token controls.</span>
                   </div>
-                </div>
+                </li>
 
-                {/* Floating Metric Pill */}
-                <div className="mt-4 pt-3 border-t border-white/10 flex items-center justify-between">
-                  <span className="text-xs text-white/60">Estimated Cost Reduction:</span>
-                  <span className="text-xs font-bold text-emerald-400 bg-emerald-950/60 px-2 py-0.5 rounded border border-emerald-500/30">
-                    -35% via Lean Scoping
-                  </span>
-                </div>
-              </div>
-
-              {/* Comparison Preview Callout */}
-              <div className="grid grid-cols-2 gap-3 text-xs">
-                <div className="p-3 rounded-xl bg-mosano-surface border border-mosano-border">
-                  <span className="text-gray-500 block mb-0.5">Typical Agency Rate</span>
-                  <span className="font-bold text-mosano-navy text-sm">€80k – €150k+</span>
-                  <span className="text-[10px] text-red-500 block mt-0.5">Slow &amp; heavy bloat</span>
-                </div>
-
-                <div className="p-3 rounded-xl bg-mosano-blue/5 border border-mosano-blue/20">
-                  <span className="text-mosano-blue font-semibold block mb-0.5">Mosano Agile Pod</span>
-                  <span className="font-bold text-mosano-blue text-sm">€18k – €58k</span>
-                  <span className="text-[10px] text-emerald-600 block mt-0.5">Lean, battle-tested</span>
-                </div>
-              </div>
-
-              {/* Motto Quote from Visual Identity */}
-              <div className="p-3 rounded-xl bg-gradient-to-r from-mosano-blue/5 to-mosano-magenta/5 border border-mosano-magenta/20 text-center">
-                <p className="text-xs italic text-mosano-navy font-medium">
-                  &ldquo;Your ride or die Software Studio partner.&rdquo;
-                </p>
-              </div>
+                <li className="flex items-start gap-2.5 p-3 rounded-xl bg-mosano-surface/50 border border-mosano-border/50">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 mt-1.5 flex-shrink-0" />
+                  <div>
+                    <strong className="text-mosano-navy font-semibold block">100% IP Transfer &amp; Senior Pods</strong>
+                    <span className="text-xs">Direct ownership with zero vendor lock-in, automated CI/CD, and dedicated Mosano pod delivery.</span>
+                  </div>
+                </li>
+              </ul>
             </div>
           </div>
         </div>

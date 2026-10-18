@@ -24,7 +24,7 @@ export const CostGuideContent: React.FC<CostGuideContentProps> = ({
   currency,
   onOpenContact,
 }) => {
-  const [openFaq, setOpenFaq] = useState<number | null>(0);
+  const [openFaq, setOpenFaq] = useState<number | null>(null);
 
   const toggleFaq = (index: number) => {
     setOpenFaq(openFaq === index ? null : index);
@@ -34,82 +34,125 @@ export const CostGuideContent: React.FC<CostGuideContentProps> = ({
   const eurToCurr = (eur: number) => (currency === "USD" ? Math.round(eur * 1.1) : eur);
 
   return (
-    <article className="space-y-16 text-mosano-navy w-full">
+    <article className="space-y-16 sm:space-y-20 text-mosano-navy w-full">
       {/* Section 1: Executive Overview & The 2026 Shift */}
-      <section id="cost-drivers" className="scroll-mt-28 space-y-6">
-        <h2 className="text-3xl sm:text-4xl font-black text-mosano-navy tracking-tight leading-tight">
-          What Does It Really Cost to Build an MVP in 2026?
-        </h2>
-
-        <p className="text-lg text-mosano-navy/80 leading-relaxed font-normal">
-          Building a Minimum Viable Product in 2026 is no longer about paying an outdated traditional agency hundreds of thousands of euros to spend six months writing basic CRUD boilerplate. With modern frameworks, AI-assisted development tooling, and cloud-native serverless backends, code scaffolding has never been faster.
-        </p>
-
-        <p className="text-lg text-mosano-navy/80 leading-relaxed font-normal">
-          However, <strong>software complexity has shifted upstream and downstream</strong>. Founders today face higher user expectations for polished UI/UX, complex AI/LLM model orchestration, strict GDPR/security compliance, and zero tolerance for buggy releases.
-        </p>
+      <section
+        id="cost-drivers"
+        className="scroll-mt-28 p-8 sm:p-10 lg:p-12 rounded-3xl bg-mosano-surface/50 border border-mosano-border/90 shadow-sm space-y-8"
+      >
+        <div className="space-y-3">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-mosano-blue/10 text-mosano-blue text-xs font-bold uppercase tracking-wider">
+            <TrendingUp className="w-3.5 h-3.5 text-mosano-blue" />
+            <span>2026 Price Benchmarks</span>
+          </div>
+          <h2 className="text-3xl sm:text-4xl font-black text-mosano-navy tracking-tight leading-tight">
+            What Does It Really Cost to Build an MVP in 2026?
+          </h2>
+          <p className="text-base sm:text-lg text-mosano-navy/80 leading-relaxed font-normal max-w-3xl">
+            Scaffolding code with AI and modern frameworks is faster than ever. However, overall engineering complexity has shifted toward <strong>seamless UX, AI model orchestration, and production security</strong>. Use our interactive budget calculator above to customize your scope, or compare tradeoffs in our architecture breakdown below.
+          </p>
+        </div>
 
         {/* 2026 Benchmark Summary Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 pt-4">
-          <div className="p-6 rounded-2xl bg-white border border-mosano-border shadow-sm hover:border-mosano-blue/40 transition-colors">
-            <span className="text-xs font-bold uppercase text-mosano-blue tracking-wider block">
-              Focused V1
-            </span>
-            <div className="text-2xl sm:text-3xl font-black text-mosano-navy mt-1">
-              {symbol}{eurToCurr(18000).toLocaleString()} – {symbol}{eurToCurr(32000).toLocaleString()}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+          {/* Card 1 */}
+          <div className="p-6 sm:p-7 rounded-2xl bg-white border border-mosano-border shadow-sm hover:border-mosano-blue/50 hover:shadow-md transition-all flex flex-col justify-between group">
+            <div>
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-xs font-bold uppercase text-mosano-blue tracking-wider">
+                  Tier 1 • Focused V1
+                </span>
+              </div>
+              <div className="text-3xl sm:text-4xl font-black text-mosano-navy tracking-tight">
+                {symbol}{eurToCurr(18000).toLocaleString()} – {symbol}{eurToCurr(32000).toLocaleString()}
+              </div>
+              <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-mosano-surface text-xs font-bold text-mosano-blue mt-3 border border-mosano-border/60">
+                <Clock className="w-3.5 h-3.5" />
+                <span>4 to 7 Weeks Timeline</span>
+              </div>
+              <p className="text-xs sm:text-sm text-mosano-navy/70 mt-4 leading-relaxed">
+                Core user loop, essential auth, billing, and responsive UI. Ideal for validating your initial hypothesis quickly with early adopters.
+              </p>
             </div>
-            <div className="text-xs font-semibold text-mosano-blue mt-1">
-              4 to 7 Weeks Timeline
+            <div className="pt-4 border-t border-mosano-border/60 mt-4 flex items-center gap-2 text-xs font-semibold text-mosano-navy/80">
+              <span className="w-1.5 h-1.5 rounded-full bg-mosano-blue" />
+              <span>Fastest time to first customer</span>
             </div>
-            <p className="text-xs sm:text-sm text-mosano-navy/70 mt-3 leading-relaxed">
-              Single core user loop, essential authentication, automated billing, and high-fidelity responsive UI. Best for validating urgent market hypotheses.
-            </p>
           </div>
 
-          <div className="p-6 rounded-2xl bg-mosano-surface border-2 border-mosano-blue shadow-md relative">
-            <div className="absolute -top-3 right-4 px-2.5 py-0.5 rounded-full bg-mosano-yellow text-mosano-navy text-[10px] font-extrabold uppercase tracking-wider">
-              POPULAR SWEET SPOT
+          {/* Card 2 (Featured Sweet Spot) */}
+          <div className="p-6 sm:p-7 rounded-2xl bg-white border-2 border-mosano-blue shadow-lg relative flex flex-col justify-between ring-4 ring-mosano-blue/5">
+            <div className="absolute -top-3.5 right-6 px-3 py-1 rounded-full bg-mosano-yellow text-mosano-navy text-[11px] font-black uppercase tracking-wider shadow-sm flex items-center gap-1">
+              <span>★</span>
+              <span>Popular Sweet Spot</span>
             </div>
-            <span className="text-xs font-bold uppercase text-mosano-magenta tracking-wider block">
-              Growth MVP
-            </span>
-            <div className="text-2xl sm:text-3xl font-black text-mosano-navy mt-1">
-              {symbol}{eurToCurr(32000).toLocaleString()} – {symbol}{eurToCurr(58000).toLocaleString()}
+            <div>
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-xs font-bold uppercase text-mosano-magenta tracking-wider">
+                  Tier 2 • Growth MVP
+                </span>
+              </div>
+              <div className="text-3xl sm:text-4xl font-black text-mosano-navy tracking-tight">
+                {symbol}{eurToCurr(32000).toLocaleString()} – {symbol}{eurToCurr(58000).toLocaleString()}
+              </div>
+              <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-mosano-blue/10 text-xs font-bold text-mosano-blue mt-3 border border-mosano-blue/20">
+                <Clock className="w-3.5 h-3.5" />
+                <span>7 to 11 Weeks Timeline</span>
+              </div>
+              <p className="text-xs sm:text-sm text-mosano-navy/70 mt-4 leading-relaxed">
+                Multi-role workflows, analytics event bus, transactional emails, integrations, and investor-ready design finish.
+              </p>
             </div>
-            <div className="text-xs font-semibold text-mosano-blue mt-1">
-              7 to 11 Weeks Timeline
+            <div className="pt-4 border-t border-mosano-border/60 mt-4 flex items-center gap-2 text-xs font-semibold text-mosano-navy/80">
+              <span className="w-1.5 h-1.5 rounded-full bg-mosano-magenta" />
+              <span>Ready for Seed &amp; Series A demos</span>
             </div>
-            <p className="text-xs sm:text-sm text-mosano-navy/70 mt-3 leading-relaxed">
-              Multi-role workflows, analytics event bus, transactional notifications, third-party integrations, and investor-ready product finish.
-            </p>
           </div>
 
-          <div className="p-6 rounded-2xl bg-white border border-mosano-border shadow-sm hover:border-mosano-blue/40 transition-colors">
-            <span className="text-xs font-bold uppercase text-mosano-purple-active tracking-wider block">
-              AI / Scaled MVP
-            </span>
-            <div className="text-2xl sm:text-3xl font-black text-mosano-navy mt-1">
-              {symbol}{eurToCurr(58000).toLocaleString()} – {symbol}{eurToCurr(95000).toLocaleString()}+
+          {/* Card 3 */}
+          <div className="p-6 sm:p-7 rounded-2xl bg-white border border-mosano-border shadow-sm hover:border-mosano-violet/50 hover:shadow-md transition-all flex flex-col justify-between group">
+            <div>
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-xs font-bold uppercase text-mosano-violet tracking-wider">
+                  Tier 3 • AI / Scaled MVP
+                </span>
+              </div>
+              <div className="text-3xl sm:text-4xl font-black text-mosano-navy tracking-tight">
+                {symbol}{eurToCurr(58000).toLocaleString()} – {symbol}{eurToCurr(95000).toLocaleString()}+
+              </div>
+              <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-mosano-surface text-xs font-bold text-mosano-violet mt-3 border border-mosano-border/60">
+                <Clock className="w-3.5 h-3.5" />
+                <span>11 to 16 Weeks Timeline</span>
+              </div>
+              <p className="text-xs sm:text-sm text-mosano-navy/70 mt-4 leading-relaxed">
+                Custom RAG knowledge pipelines, real-time collaboration engines, or regulated fintech/healthtech workflows.
+              </p>
             </div>
-            <div className="text-xs font-semibold text-mosano-blue mt-1">
-              11 to 16 Weeks Timeline
+            <div className="pt-4 border-t border-mosano-border/60 mt-4 flex items-center gap-2 text-xs font-semibold text-mosano-navy/80">
+              <span className="w-1.5 h-1.5 rounded-full bg-mosano-violet" />
+              <span>Deep proprietary tech moats</span>
             </div>
-            <p className="text-xs sm:text-sm text-mosano-navy/70 mt-3 leading-relaxed">
-              Custom RAG knowledge pipelines, real-time collaboration engines, high-volume multi-sided marketplaces, or regulated fintech/healthtech apps.
-            </p>
           </div>
         </div>
       </section>
 
       {/* Section 2: Platform Comparison */}
-      <section className="space-y-6">
-        <h2 className="text-2xl sm:text-3xl font-black text-mosano-navy tracking-tight">
-          Web vs. Mobile vs. AI-Native: Where Should You Launch?
-        </h2>
-
-        <p className="text-base sm:text-lg text-mosano-navy/80 leading-relaxed font-normal">
-          One of the costliest errors early-stage founders make is demanding both a web portal and native iOS/Android apps on day one without validated demand. Selecting the right foundation saves up to 45% in upfront engineering investment.
-        </p>
+      <section
+        id="platform-comparison"
+        className="scroll-mt-28 p-8 sm:p-10 lg:p-12 rounded-3xl bg-white border border-mosano-border shadow-sm space-y-6"
+      >
+        <div className="space-y-2">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-mosano-magenta/10 text-mosano-magenta text-xs font-bold uppercase tracking-wider">
+            <Layers className="w-3.5 h-3.5 text-mosano-magenta" />
+            <span>Architecture Tradeoffs</span>
+          </div>
+          <h2 className="text-2xl sm:text-3xl font-black text-mosano-navy tracking-tight">
+            Web vs. Mobile vs. AI-Native: Where Should You Launch?
+          </h2>
+          <p className="text-sm sm:text-base text-mosano-navy/80 leading-relaxed font-normal max-w-3xl">
+            Demanding both web and native mobile apps on day one is a common pitfall. Picking one clear foundation saves up to 45% in upfront development.
+          </p>
+        </div>
 
         {/* Comparison Table */}
         <div className="overflow-x-auto rounded-2xl border border-mosano-border shadow-sm">
@@ -119,48 +162,76 @@ export const CostGuideContent: React.FC<CostGuideContentProps> = ({
                 <th className="p-4 sm:p-5">Platform Archetype</th>
                 <th className="p-4 sm:p-5">Cost Multiplier</th>
                 <th className="p-4 sm:p-5">Time to Live</th>
-                <th className="p-4 sm:p-5">Best Fit</th>
+                <th className="p-4 sm:p-5">Best Fit &amp; Recommendation</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-mosano-border">
-              <tr className="hover:bg-mosano-surface/40 transition-colors">
+              <tr className="hover:bg-mosano-surface/50 transition-colors">
                 <td className="p-4 sm:p-5 font-bold text-mosano-navy">
-                  Modern Web SaaS (Next.js / TypeScript)
+                  <div className="flex items-center gap-2">
+                    <span className="w-2 h-2 rounded-full bg-emerald-500" />
+                    <span>Modern Web SaaS (Next.js / TypeScript)</span>
+                  </div>
                 </td>
-                <td className="p-4 sm:p-5 text-emerald-600 font-semibold">1.0x (Baseline)</td>
-                <td className="p-4 sm:p-5">4 – 8 Weeks</td>
+                <td className="p-4 sm:p-5">
+                  <span className="px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 font-bold text-xs border border-emerald-200">
+                    1.0x (Baseline)
+                  </span>
+                </td>
+                <td className="p-4 sm:p-5 font-medium">4 – 8 Weeks</td>
                 <td className="p-4 sm:p-5 text-mosano-navy/80">
-                  B2B software, internal tools, client portals, quick iteration loops.
+                  B2B software, customer portals, fast iteration cycles. Recommended for most V1s.
                 </td>
               </tr>
-              <tr className="hover:bg-mosano-surface/40 transition-colors">
+              <tr className="hover:bg-mosano-surface/50 transition-colors">
                 <td className="p-4 sm:p-5 font-bold text-mosano-navy">
-                  Cross-Platform Mobile (React Native)
+                  <div className="flex items-center gap-2">
+                    <span className="w-2 h-2 rounded-full bg-mosano-blue" />
+                    <span>Cross-Platform Mobile (React Native)</span>
+                  </div>
                 </td>
-                <td className="p-4 sm:p-5 text-mosano-blue font-semibold">1.25x – 1.35x</td>
-                <td className="p-4 sm:p-5">6 – 10 Weeks</td>
+                <td className="p-4 sm:p-5">
+                  <span className="px-2 py-0.5 rounded-full bg-blue-50 text-mosano-blue font-bold text-xs border border-blue-200">
+                    1.25x – 1.35x
+                  </span>
+                </td>
+                <td className="p-4 sm:p-5 font-medium">6 – 10 Weeks</td>
                 <td className="p-4 sm:p-5 text-mosano-navy/80">
-                  Consumer apps requiring camera, push notifications, offline cache &amp; App Store presence.
+                  Apps requiring camera, push alerts, offline storage, or App Store presence.
                 </td>
               </tr>
-              <tr className="hover:bg-mosano-surface/40 transition-colors">
+              <tr className="hover:bg-mosano-surface/50 transition-colors">
                 <td className="p-4 sm:p-5 font-bold text-mosano-navy">
-                  AI-Native Application (RAG / LLMs)
+                  <div className="flex items-center gap-2">
+                    <span className="w-2 h-2 rounded-full bg-mosano-magenta" />
+                    <span>AI-Native Application (RAG / LLMs)</span>
+                  </div>
                 </td>
-                <td className="p-4 sm:p-5 text-mosano-magenta font-semibold">1.35x – 1.6x</td>
-                <td className="p-4 sm:p-5">8 – 14 Weeks</td>
+                <td className="p-4 sm:p-5">
+                  <span className="px-2 py-0.5 rounded-full bg-pink-50 text-mosano-magenta font-bold text-xs border border-pink-200">
+                    1.35x – 1.6x
+                  </span>
+                </td>
+                <td className="p-4 sm:p-5 font-medium">8 – 14 Weeks</td>
                 <td className="p-4 sm:p-5 text-mosano-navy/80">
-                  Domain-specific copilots, document intelligence, automated agents, semantic discovery.
+                  Domain copilots, document intelligence, and automated agent workflows.
                 </td>
               </tr>
-              <tr className="hover:bg-mosano-surface/40 transition-colors">
+              <tr className="hover:bg-mosano-surface/50 transition-colors bg-red-50/20">
                 <td className="p-4 sm:p-5 font-bold text-mosano-navy">
-                  Dual Native (Swift + Kotlin)
+                  <div className="flex items-center gap-2">
+                    <span className="w-2 h-2 rounded-full bg-red-500" />
+                    <span>Dual Native (Swift + Kotlin)</span>
+                  </div>
                 </td>
-                <td className="p-4 sm:p-5 text-red-600 font-semibold">2.0x – 2.5x</td>
-                <td className="p-4 sm:p-5">14 – 20 Weeks</td>
+                <td className="p-4 sm:p-5">
+                  <span className="px-2 py-0.5 rounded-full bg-red-50 text-red-700 font-bold text-xs border border-red-200">
+                    2.0x – 2.5x
+                  </span>
+                </td>
+                <td className="p-4 sm:p-5 font-medium">14 – 20 Weeks</td>
                 <td className="p-4 sm:p-5 text-mosano-navy/80">
-                  <span className="text-red-500 font-medium">Rarely advised for V1</span>. High maintenance overhead for early validation.
+                  <strong className="text-red-600">Rarely advised for V1</strong> due to high initial maintenance and dual engineering pod overhead.
                 </td>
               </tr>
             </tbody>
@@ -169,66 +240,83 @@ export const CostGuideContent: React.FC<CostGuideContentProps> = ({
       </section>
 
       {/* Section 3: The 5 Hidden Costs */}
-      <section id="hidden-traps" className="scroll-mt-28 space-y-6">
-        <h2 className="text-2xl sm:text-3xl font-black text-mosano-navy tracking-tight">
-          The 5 Hidden MVP Costs That Catch Non-Technical Founders Off Guard
-        </h2>
+      <section
+        id="hidden-traps"
+        className="scroll-mt-28 p-8 sm:p-10 lg:p-12 rounded-3xl bg-mosano-surface/50 border border-mosano-border shadow-sm space-y-6"
+      >
+        <div className="space-y-2">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-100 text-red-700 text-xs font-bold uppercase tracking-wider">
+            <ShieldAlert className="w-3.5 h-3.5 text-red-600" />
+            <span>Budget Traps To Avoid</span>
+          </div>
+          <h2 className="text-2xl sm:text-3xl font-black text-mosano-navy tracking-tight">
+            The 5 Hidden MVP Costs That Catch Non-Technical Founders Off Guard
+          </h2>
+          <p className="text-sm sm:text-base text-mosano-navy/80 leading-relaxed font-normal max-w-3xl">
+            Base dev quotes often omit secondary expenses that add 25% to 40% in friction if not accounted for early.
+          </p>
+        </div>
 
-        <p className="text-base sm:text-lg text-mosano-navy/80 leading-relaxed font-normal">
-          An MVP quote usually accounts for development hours. But early-stage startups encounter secondary expenses that can quickly add 25% to 40% in friction if not planned in advance.
-        </p>
+        {/* Dedicated Engineering & Architecture Photo */}
+        <div className="relative overflow-hidden rounded-2xl border border-mosano-border/80 shadow-md bg-mosano-navy w-full group">
+          <img
+            src="/mvp-architecture-engineering.jpg"
+            alt="Software engineering architecture, code review and cloud system debugging"
+            className="w-full h-56 sm:h-72 lg:h-80 object-cover object-center transform transition-transform duration-700 group-hover:scale-105"
+            loading="lazy"
+          />
+        </div>
 
-        <div className="space-y-4">
+        {/* Points listed strictly under each other */}
+        <div className="space-y-3.5 w-full">
           {[
             {
               num: "01",
-              title: "Third-Party SaaS & AI Token Consumption Spikes",
-              desc: "Deploying an LLM or computer vision feature without caching or prompt guardrails can lead to unexpected cloud invoices. In 2026, semantic caching and streaming responses must be built into the MVP architecture from day one.",
-              impact: "€300 – €2,500/mo unbudgeted cloud burn",
+              title: "AI Token & Model Consumption",
+              desc: "Running LLMs without semantic caching or token limits triggers surprise cloud bills.",
+              impact: "€300 – €2,500/mo unbudgeted spend",
             },
             {
               num: "02",
-              title: "App Store Review & Guideline Delays",
-              desc: "Apple and Google enforce rigorous policies around account deletion, in-app purchases (IAP 30% cut), privacy nutrition labels, and user-generated content moderation. Reworking these mid-flight delays releases by 2 to 4 weeks.",
-              impact: "€4,000+ in blocked marketing momentum",
+              title: "App Store Review Delays",
+              desc: "Apple & Google strict review guidelines (IAP, account deletion, privacy labels) can delay launch by weeks.",
+              impact: "2 to 4 weeks lost launch momentum",
             },
             {
               num: "03",
-              title: "Authentication, Multi-Tenancy & Authorization Debt",
-              desc: "Building authentication isn't just a sign-up form. Role-based access control (RBAC), team workspaces, invite links, session revocation, and passwordless magic links take substantial backend engineering if built from scratch instead of leveraging proven auth primitives.",
-              impact: "40 to 60 wasted engineering hours",
+              title: "Auth & Multi-Tenancy Debt",
+              desc: "Role-based access (RBAC), team workspaces, and session controls take weeks if built from scratch.",
+              impact: "40–60 wasted dev hours",
             },
             {
               num: "04",
-              title: "Post-Launch Iteration & Bug Triage Buffer",
-              desc: "An MVP release is the starting line, not the finish line. When real users onboard, you need immediate capacity to ship rapid hotfixes and iterate on user feedback. Always allocate a 20% post-launch sprint buffer.",
-              impact: "Founder panic if the initial agency disappears after handover",
+              title: "Post-Launch Iteration Buffer",
+              desc: "Real users uncover immediate edge cases. You need dedicated support to ship fixes post-launch.",
+              impact: "Plan 20% sprint buffer",
             },
             {
               num: "05",
-              title: "Monolithic Code Spaghetti & Re-Architecture Costs",
-              desc: "Cheap outsourced code frequently cuts corners with hardcoded variables, missing migrations, and zero automated tests. When you raise seed funding, technical due diligence flags it as a complete rewrite.",
-              impact: "Up to 100% loss of initial engineering capital",
+              title: "Monolithic Spaghetti & Rewrite Risk",
+              desc: "Cheap outsourced code frequently cuts corners with zero automated tests or documentation, requiring a complete rewrite upon raising capital.",
+              impact: "100% loss of initial dev investment",
             },
           ].map((trap) => (
             <div
               key={trap.num}
-              className="p-5 sm:p-6 rounded-2xl bg-white border border-mosano-border hover:border-mosano-blue/40 transition-all shadow-sm"
+              className="p-5 rounded-2xl bg-white border border-mosano-border hover:border-mosano-blue/40 transition-all shadow-sm flex items-start gap-4 hover:shadow-md"
             >
-              <div className="flex items-start gap-4">
-                <span className="text-xl font-black text-mosano-magenta font-mono flex-shrink-0">
-                  {trap.num}
-                </span>
-                <div className="space-y-1.5">
-                  <h3 className="text-base sm:text-lg font-bold text-mosano-navy">
-                    {trap.title}
-                  </h3>
-                  <p className="text-sm text-mosano-navy/70 leading-relaxed">
-                    {trap.desc}
-                  </p>
-                  <div className="inline-block pt-1 text-xs font-semibold text-mosano-blue">
-                    Hidden impact: <span className="text-mosano-navy font-bold">{trap.impact}</span>
-                  </div>
+              <span className="text-xl font-black text-mosano-magenta font-mono flex-shrink-0 w-8 h-8 rounded-lg bg-pink-50 flex items-center justify-center">
+                {trap.num}
+              </span>
+              <div className="space-y-1 flex-1">
+                <h3 className="text-sm sm:text-base font-bold text-mosano-navy">
+                  {trap.title}
+                </h3>
+                <p className="text-xs sm:text-sm text-mosano-navy/70 leading-relaxed">
+                  {trap.desc}
+                </p>
+                <div className="text-[11px] font-semibold text-mosano-blue pt-1">
+                  Hidden impact: <span className="text-mosano-navy font-bold">{trap.impact}</span>
                 </div>
               </div>
             </div>
@@ -237,66 +325,68 @@ export const CostGuideContent: React.FC<CostGuideContentProps> = ({
       </section>
 
       {/* Section 4: Scoping Down Framework */}
-      <section className="space-y-6">
-        <h2 className="text-2xl sm:text-3xl font-black text-mosano-navy tracking-tight">
-          How to Cut 40% of MVP Waste Without Weakening Your Core Hypothesis
-        </h2>
-
-        <p className="text-base sm:text-lg text-mosano-navy/80 leading-relaxed font-normal">
-          Every extra feature adds non-linear complexity. A product with 5 features requires 10 interaction test paths; a product with 10 features requires 45. Here is the framework Mosano uses during our collaborative discovery sessions:
-        </p>
+      <section
+        id="scoping-framework"
+        className="scroll-mt-28 p-8 sm:p-10 lg:p-12 rounded-3xl bg-white border border-mosano-border shadow-sm space-y-6"
+      >
+        <div className="space-y-2">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-bold uppercase tracking-wider">
+            <Sliders className="w-3.5 h-3.5 text-emerald-600" />
+            <span>Scope Discipline</span>
+          </div>
+          <h2 className="text-2xl sm:text-3xl font-black text-mosano-navy tracking-tight">
+            How to Cut 40% of MVP Waste
+          </h2>
+          <p className="text-sm sm:text-base text-mosano-navy/80 leading-relaxed font-normal max-w-3xl">
+            Every extra feature introduces non-linear complexity. Focus only on the hypothesis that drives your first paying user:
+          </p>
+        </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-          <div className="p-6 sm:p-7 rounded-2xl bg-white border border-mosano-border shadow-sm space-y-3">
-            <div className="w-8 h-8 rounded-lg bg-red-100 text-red-600 flex items-center justify-center font-bold text-sm">
-              ✕
+          <div className="p-6 rounded-2xl bg-red-50/40 border border-red-200 shadow-sm space-y-4">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-red-100 text-red-700 font-bold text-xs uppercase tracking-wide">
+              ✕ Postpone to V2 (Common Waste)
             </div>
-            <h3 className="font-bold text-mosano-navy text-lg">
-              Features You Can Safely Postpone to V2
-            </h3>
-            <ul className="text-sm text-mosano-navy/70 space-y-2.5">
-              <li className="flex items-start gap-2">
-                <span className="text-red-500 font-bold">•</span>
-                <span>Custom in-app messaging (use Slack/Intercom embeds or simple emails)</span>
+            <ul className="text-xs sm:text-sm text-mosano-navy/80 space-y-2.5">
+              <li className="flex items-start gap-2.5">
+                <span className="text-red-500 font-bold text-base leading-none">•</span>
+                <span>Custom in-app chat (use Slack/email or Crisp instead)</span>
               </li>
-              <li className="flex items-start gap-2">
-                <span className="text-red-500 font-bold">•</span>
-                <span>Granular custom notification preferences</span>
+              <li className="flex items-start gap-2.5">
+                <span className="text-red-500 font-bold text-base leading-none">•</span>
+                <span>Complex notification matrix and granular preferences</span>
               </li>
-              <li className="flex items-start gap-2">
-                <span className="text-red-500 font-bold">•</span>
-                <span>Complex automated product tours (rely on crisp UX and 1-on-1 demos)</span>
+              <li className="flex items-start gap-2.5">
+                <span className="text-red-500 font-bold text-base leading-none">•</span>
+                <span>Automated product walkthrough tours and gamification</span>
               </li>
-              <li className="flex items-start gap-2">
-                <span className="text-red-500 font-bold">•</span>
-                <span>Multi-currency or localized languages (validate in 1 dominant market first)</span>
+              <li className="flex items-start gap-2.5">
+                <span className="text-red-500 font-bold text-base leading-none">•</span>
+                <span>Multi-language localization before single-language PMF</span>
               </li>
             </ul>
           </div>
 
-          <div className="p-6 sm:p-7 rounded-2xl bg-mosano-surface border border-mosano-blue/30 shadow-sm space-y-3">
-            <div className="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold text-sm">
-              ✓
+          <div className="p-6 rounded-2xl bg-emerald-50/40 border border-emerald-200 shadow-sm space-y-4">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-emerald-100 text-emerald-800 font-bold text-xs uppercase tracking-wide">
+              ✓ Non-Negotiable for V1 (High ROI)
             </div>
-            <h3 className="font-bold text-mosano-navy text-lg">
-              Non-Negotiable Investments for V1
-            </h3>
-            <ul className="text-sm text-mosano-navy/80 space-y-2.5">
-              <li className="flex items-start gap-2">
-                <span className="text-emerald-600 font-bold">•</span>
-                <span>The <strong>Single Core Action</strong> that delivers the &ldquo;Aha!&rdquo; value moment</span>
+            <ul className="text-xs sm:text-sm text-mosano-navy/80 space-y-2.5">
+              <li className="flex items-start gap-2.5">
+                <span className="text-emerald-600 font-bold text-base leading-none">•</span>
+                <span><strong>The Core Loop</strong> that delivers immediate, tangible user value</span>
               </li>
-              <li className="flex items-start gap-2">
-                <span className="text-emerald-600 font-bold">•</span>
-                <span>Seamless Stripe checkout / payment capture (monetization is ultimate validation)</span>
+              <li className="flex items-start gap-2.5">
+                <span className="text-emerald-600 font-bold text-base leading-none">•</span>
+                <span>Stripe checkout or payment gateway (monetization proves demand)</span>
               </li>
-              <li className="flex items-start gap-2">
-                <span className="text-emerald-600 font-bold">•</span>
-                <span>Clean analytics tracking (PostHog/Mixpanel) to measure activation funnel</span>
+              <li className="flex items-start gap-2.5">
+                <span className="text-emerald-600 font-bold text-base leading-none">•</span>
+                <span>Product analytics (PostHog/Mixpanel) for funnel and activation tracking</span>
               </li>
-              <li className="flex items-start gap-2">
-                <span className="text-emerald-600 font-bold">•</span>
-                <span>Robust error boundaries and observability (Sentry) for instant bug detection</span>
+              <li className="flex items-start gap-2.5">
+                <span className="text-emerald-600 font-bold text-base leading-none">•</span>
+                <span>Error monitoring (Sentry) and automated CI/CD for rapid triage</span>
               </li>
             </ul>
           </div>
@@ -304,96 +394,122 @@ export const CostGuideContent: React.FC<CostGuideContentProps> = ({
       </section>
 
       {/* Section 5: Methodology & Disclaimer */}
-      <section id="methodology" className="scroll-mt-28 space-y-6">
-        <h2 className="text-2xl sm:text-3xl font-black text-mosano-navy tracking-tight">
-          Estimate Methodology &amp; Transparent Scoping
-        </h2>
-
-        <p className="text-base sm:text-lg text-mosano-navy/80 leading-relaxed font-normal">
-          Unlike traditional agencies that present bloated 50-page time-and-materials proposals, Mosano operates with <strong>fixed-sprint dedicated engineering pods</strong> based in Portugal.
-        </p>
-
-        <div className="p-6 sm:p-8 rounded-2xl bg-gradient-to-r from-mosano-surface to-white border border-mosano-border space-y-4">
-          <h3 className="font-bold text-mosano-navy text-lg">
-            How Our Estimations Are Structured:
-          </h3>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm">
-            <div className="p-5 rounded-xl bg-white border border-mosano-border/60">
-              <span className="font-bold text-mosano-blue block mb-1">1. Discovery Sprint</span>
-              <p className="text-mosano-navy/70 text-xs sm:text-sm leading-relaxed">
-                5 days of interactive architecture, wireframing, and database design. We lock scope and provide a fixed price guarantee.
-              </p>
-            </div>
-            <div className="p-4 sm:p-5 rounded-xl bg-white border border-mosano-border/60">
-              <span className="font-bold text-mosano-magenta block mb-1">2. Production Pods</span>
-              <p className="text-mosano-navy/70 text-xs sm:text-sm leading-relaxed">
-                Senior engineering pods (Tech Lead + Senior Engineer + Designer) shipping working production builds every single Friday.
-              </p>
-            </div>
-            <div className="p-4 sm:p-5 rounded-xl bg-white border border-mosano-border/60">
-              <span className="font-bold text-mosano-navy block mb-1">3. Handover &amp; IP</span>
-              <p className="text-mosano-navy/70 text-xs sm:text-sm leading-relaxed">
-                100% intellectual property ownership transferred to you. Clean GitHub repository, automated CI/CD, and zero vendor lock-in.
-              </p>
-            </div>
+      <section
+        id="methodology"
+        className="scroll-mt-28 p-8 sm:p-10 lg:p-12 rounded-3xl bg-mosano-surface/50 border border-mosano-border shadow-sm space-y-6"
+      >
+        <div className="space-y-2">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-mosano-violet/10 text-mosano-violet text-xs font-bold uppercase tracking-wider">
+            <Cpu className="w-3.5 h-3.5 text-mosano-violet" />
+            <span>Mosano Delivery Model</span>
           </div>
+          <h2 className="text-2xl sm:text-3xl font-black text-mosano-navy tracking-tight">
+            Estimate Methodology &amp; Transparent Sprints
+          </h2>
+          <p className="text-sm sm:text-base text-mosano-navy/80 leading-relaxed font-normal max-w-3xl">
+            No bloated 50-page proposals or surprise billable hours. Through our <a href="https://mosano.eu/service/product-development/" target="_blank" rel="noopener noreferrer" className="font-semibold text-mosano-blue hover:text-mosano-magenta transition-colors">dedicated product development services</a>, Mosano works in <strong>fixed-sprint engineering pods</strong> delivering globally. Learn more in our <a href="https://mosano.eu/blog/from-idea-to-mvp-a-ctos-guide-to-building-a-product-that-scales/" target="_blank" rel="noopener noreferrer" className="font-semibold text-mosano-blue hover:text-mosano-magenta transition-colors">CTO guide to building scalable MVPs</a>.
+          </p>
         </div>
 
-        {/* Legal / Disclaimer Notice */}
-        <div className="p-4 sm:p-5 rounded-xl bg-gray-50 border border-gray-200 text-xs text-gray-600 leading-relaxed">
-          <strong>Important Scope Notice:</strong> Figures presented in the MVP Budget Calculator reflect 2026 European software studio benchmarks for production-grade software engineered by senior professionals. They are meant to guide your budgeting and do not constitute a binding legal contract. Final proposals are provided following an in-depth technical scoping session with the Mosano architecture team.
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
+          <div className="p-6 rounded-2xl bg-white border border-mosano-border shadow-sm hover:border-mosano-blue/40 transition-colors">
+            <div className="w-8 h-8 rounded-xl bg-blue-50 text-mosano-blue font-bold text-sm flex items-center justify-center mb-3">
+              1
+            </div>
+            <h3 className="font-bold text-mosano-navy text-base mb-1">
+              Discovery Sprint
+            </h3>
+            <p className="text-mosano-navy/70 text-xs sm:text-sm leading-relaxed">
+              5 days of interactive architecture, clickable wireframes, and locked scope with a fixed price guarantee before kickoff.
+            </p>
+          </div>
+
+          <div className="p-6 rounded-2xl bg-white border border-mosano-border shadow-sm hover:border-mosano-magenta/40 transition-colors">
+            <div className="w-8 h-8 rounded-xl bg-pink-50 text-mosano-magenta font-bold text-sm flex items-center justify-center mb-3">
+              2
+            </div>
+            <h3 className="font-bold text-mosano-navy text-base mb-1">
+              Production Pods
+            </h3>
+            <p className="text-mosano-navy/70 text-xs sm:text-sm leading-relaxed">
+              Senior engineering pods (Tech Lead + Senior Engineer + Designer) shipping working software with weekly demo drops every Friday.
+            </p>
+          </div>
+
+          <div className="p-6 rounded-2xl bg-white border border-mosano-border shadow-sm hover:border-emerald-500/40 transition-colors">
+            <div className="w-8 h-8 rounded-xl bg-emerald-50 text-emerald-600 font-bold text-sm flex items-center justify-center mb-3">
+              3
+            </div>
+            <h3 className="font-bold text-mosano-navy text-base mb-1">
+              Handover &amp; 100% IP
+            </h3>
+            <p className="text-mosano-navy/70 text-xs sm:text-sm leading-relaxed">
+              100% intellectual property transferred to your organization. Clean GitHub repositories, CI/CD pipelines, and zero vendor lock-in.
+            </p>
+          </div>
         </div>
       </section>
 
       {/* Section 6: FAQ Accordion */}
-      <section id="faq" className="scroll-mt-28 space-y-6">
-        <h2 className="text-2xl sm:text-3xl font-black text-mosano-navy tracking-tight">
-          Frequently Asked Questions About MVP Budgeting
-        </h2>
+      <section
+        id="faq"
+        className="scroll-mt-28 p-8 sm:p-10 lg:p-12 rounded-3xl bg-white border border-mosano-border shadow-sm space-y-6"
+      >
+        <div className="space-y-2">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-mosano-blue/10 text-mosano-blue text-xs font-bold uppercase tracking-wider">
+            <span>Frequently Asked</span>
+          </div>
+          <h2 className="text-2xl sm:text-3xl font-black text-mosano-navy tracking-tight">
+            Frequently Asked Questions
+          </h2>
+          <p className="text-sm sm:text-base text-mosano-navy/70">
+            Answers to common founder questions regarding budgeting, tech stack selection, and IP ownership.
+          </p>
+        </div>
 
         <div className="space-y-3">
           {[
             {
               q: "How much should a startup budget for an MVP in 2026?",
-              a: `In 2026, a realistic budget for a well-engineered, investor-grade MVP built by a dedicated European studio ranges from ${symbol}${eurToCurr(18000).toLocaleString()} to ${symbol}${eurToCurr(58000).toLocaleString()}. Simpler single-workflow SaaS apps can launch around ${symbol}${eurToCurr(18000).toLocaleString()}–${symbol}${eurToCurr(32000).toLocaleString()}, while AI-powered or cross-platform mobile apps typically require ${symbol}${eurToCurr(32000).toLocaleString()}–${symbol}${eurToCurr(58000).toLocaleString()}. Avoid generic offshore shops quoting under ${symbol}${eurToCurr(10000).toLocaleString()}, as they frequently produce throwaway code that fails technical due diligence.`,
+              a: `A realistic budget for an investor-grade MVP engineered by Mosano ranges from ${symbol}${eurToCurr(18000).toLocaleString()} to ${symbol}${eurToCurr(58000).toLocaleString()}. Focused SaaS apps start around ${symbol}${eurToCurr(18000).toLocaleString()}–${symbol}${eurToCurr(32000).toLocaleString()}, while AI-native or mobile products average ${symbol}${eurToCurr(32000).toLocaleString()}–${symbol}${eurToCurr(58000).toLocaleString()}.`,
             },
             {
-              q: "How long does it take to build and launch an MVP in 2026?",
-              a: "With contemporary stacks (Next.js, Supabase, Tailwind, React Native, serverless backends), a focused MVP should take between 4 and 10 weeks to reach production. If an agency quotes longer than 12 weeks for version one, the scope is almost certainly bloated with non-essential features.",
+              q: "How long does it take to launch an MVP?",
+              a: "With modern frameworks and cloud tooling, a focused MVP should take 4 to 10 weeks to reach production. Quotes exceeding 12 weeks for V1 typically signal bloated scope.",
             },
             {
-              q: "What affects the cost of building an AI-powered MVP?",
-              a: "AI MVP costs are determined by: 1) Model architecture (leveraging hosted APIs like Claude 3.5 or GPT-4o vs fine-tuning open-weights models), 2) Retrieval-Augmented Generation (RAG) and vector database indexing, 3) Token volume and prompt latency optimizations, and 4) Human-in-the-loop evaluation and guardrails. Expect an AI-native product to require approximately 20% to 35% more engineering investment than traditional CRUD apps.",
+              q: "What affects the cost of an AI-powered MVP?",
+              a: "Key cost drivers include model architecture (hosted APIs vs fine-tuning), RAG/vector retrieval setup, token caching, and human-in-the-loop evals. Expect AI features to add ~20%–35% in engineering effort.",
             },
             {
-              q: "What are the advantages of partnering with Mosano versus hiring freelancers or a traditional agency?",
-              a: "Mosano gives startup founders the agility and senior focus of a dedicated team without the overhead of hiring full-time or the painful management burden of coordinating disparate freelancers. Based in Portugal, our senior engineering pods provide top-tier European technical craft, direct Slack communication, transparent fixed-sprint pricing, and 100% intellectual property ownership.",
+              q: "Why partner with Mosano over freelancers or big agencies?",
+              a: "Mosano provides the focus and caliber of a senior team without full-time hiring friction or agency overhead. Our pods deliver top-tier craft, direct Slack collaboration, and 100% IP ownership.",
             },
             {
               q: "Does Mosano sign Non-Disclosure Agreements (NDAs)?",
-              a: "Yes, absolutely. We prioritize your confidentiality and intellectual property. We are happy to execute a mutual NDA prior to reviewing proprietary business logic or product specifications.",
+              a: "Yes. We treat your IP and proprietary logic with complete confidentiality and regularly sign mutual NDAs before reviewing product details.",
             },
           ].map((item, index) => {
             const isOpen = openFaq === index;
             return (
               <div
                 key={index}
-                className="rounded-2xl border border-mosano-border bg-white overflow-hidden transition-all"
+                className="rounded-2xl border border-mosano-border bg-white overflow-hidden transition-all shadow-sm hover:border-mosano-blue/30"
               >
                 <button
                   type="button"
                   onClick={() => toggleFaq(index)}
-                  className="w-full p-5 sm:p-6 text-left flex items-center justify-between gap-4 font-bold text-mosano-navy hover:text-mosano-blue transition-colors text-base"
+                  className="w-full p-5 text-left flex items-center justify-between gap-4 font-bold text-mosano-navy hover:text-mosano-blue transition-colors text-sm sm:text-base"
                 >
                   <span>{item.q}</span>
                   {isOpen ? (
-                    <ChevronUp className="w-5 h-5 text-mosano-magenta flex-shrink-0" />
+                    <ChevronUp className="w-4 h-4 text-mosano-magenta flex-shrink-0" />
                   ) : (
-                    <ChevronDown className="w-5 h-5 text-gray-400 flex-shrink-0" />
+                    <ChevronDown className="w-4 h-4 text-gray-400 flex-shrink-0" />
                   )}
                 </button>
                 {isOpen && (
-                  <div className="px-5 pb-5 sm:px-6 sm:pb-6 text-sm text-mosano-navy/80 leading-relaxed border-t border-mosano-border/40 pt-4">
+                  <div className="px-5 pb-5 text-xs sm:text-sm text-mosano-navy/75 leading-relaxed border-t border-mosano-border/40 pt-3">
                     {item.a}
                   </div>
                 )}
@@ -404,31 +520,34 @@ export const CostGuideContent: React.FC<CostGuideContentProps> = ({
       </section>
 
       {/* Mid-Content Scoping CTA */}
-      <div className="p-8 sm:p-10 rounded-3xl bg-mosano-blue text-white relative overflow-hidden shadow-mosano-hover">
-        <div className="relative z-10 max-w-2xl space-y-4">
-          <span className="text-xs font-bold text-mosano-yellow uppercase tracking-wider">
-            Next Step For Your Product
-          </span>
+      <div className="p-8 sm:p-10 lg:p-12 rounded-3xl bg-mosano-navy text-white relative overflow-hidden shadow-2xl border border-mosano-blue/30">
+        <div className="relative z-10 max-w-xl space-y-4">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 text-mosano-yellow text-xs font-bold uppercase tracking-wider">
+            <span>Next Step</span>
+          </div>
           <h3 className="text-2xl sm:text-3xl font-black text-white leading-tight">
-            Ready to Validate Your Software Idea Without Overspending?
+            Ready to Scope Your Version 1?
           </h3>
-          <p className="text-sm sm:text-base text-white/80 leading-relaxed">
-            Get a tailored technical breakdown from our senior engineering leads. We review your concept, pinpoint hidden risks, and map out a lean 4 to 8 week launch roadmap.
+          <p className="text-sm text-white/80 leading-relaxed">
+            Get a tailored technical breakdown from our senior engineering leads. We review your concept and map out a lean 4 to 8 week launch roadmap.
           </p>
-          <button
-            type="button"
-            onClick={() => {
-              trackCTAClick("mid_content_banner", "schedule_scoping_session");
-              onOpenContact();
-            }}
-            className="px-6 py-3.5 rounded-xl bg-white text-mosano-navy font-bold text-sm hover:bg-mosano-surface transition-all shadow-md flex items-center gap-2 group active:scale-95"
-          >
-            <span>discuss your project with mosano</span>
-            <ArrowRight className="w-4 h-4 text-mosano-blue transition-transform group-hover:translate-x-1" />
-          </button>
+          <div className="pt-2">
+            <button
+              type="button"
+              onClick={() => {
+                trackCTAClick("mid_content_banner", "schedule_scoping_session");
+                onOpenContact();
+              }}
+              className="px-6 py-3.5 rounded-xl bg-mosano-magenta hover:bg-pink-600 text-white font-bold text-sm sm:text-base transition-all shadow-lg flex items-center gap-2 group active:scale-95"
+            >
+              <span>Discuss Your MVP Scope</span>
+              <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+            </button>
+          </div>
         </div>
 
-        <div className="absolute -bottom-16 -right-16 w-64 h-64 bg-mosano-magenta/30 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute -bottom-16 -right-16 w-72 h-72 bg-mosano-blue/40 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute top-0 right-10 w-48 h-48 bg-mosano-magenta/30 rounded-full blur-3xl pointer-events-none" />
       </div>
     </article>
   );
