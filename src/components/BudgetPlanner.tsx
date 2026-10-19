@@ -27,6 +27,7 @@ export interface ScopeCalculation {
   currencyCode: "EUR" | "USD";
   weeksMin: number;
   weeksMax: number;
+  podName?: string;
   teamComposition: string[];
   deliverables: string[];
   platformLabel: string;
@@ -134,17 +135,79 @@ export const BudgetPlanner: React.FC<BudgetPlannerProps> = ({
       weeksMax = Math.max(6, Math.round(weeksMax * 0.75));
     }
 
-    const team = [
-      "1x Tech Lead / Solutions Architect",
-      "1x Senior Fullstack Engineer",
-      "1x Senior Product Designer",
-    ];
+    // Dynamic Studio Pod: Exactly 4 focused specialist roles tailored to all parameters
+    // Keeping a consistent 4-item count ensures the scope summary box height stays fixed
+    // without expanding or shrinking when parameters change.
 
-    if (plannerState.aiLevel >= 2) {
-      team.push("1x AI/Vector Systems Specialist");
+    // 1. Leadership & Technical Architecture
+    let leadRole = "1x Tech Lead / Solutions Architect";
+    if (plannerState.aiLevel === 3) {
+      leadRole = "1x Principal AI & Systems Architect";
+    } else if (plannerState.platform === "both") {
+      leadRole = "1x Cross-Platform Systems Architect";
+    } else if (plannerState.platform === "mobile") {
+      leadRole = "1x Mobile Solutions Architect";
+    } else if (plannerState.screens >= 10) {
+      leadRole = "1x Principal Solutions Architect";
     }
-    if (plannerState.platform === "both" || plannerState.screens >= 10) {
-      team.push("1x Dedicated QA Automation Engineer");
+
+    // 2. Core Engineering Capacity
+    let engRole = "1x Senior Fullstack Engineer (Next.js)";
+    if (plannerState.platform === "mobile") {
+      engRole =
+        plannerState.screens >= 8
+          ? "2x Senior Mobile Engineers (React Native)"
+          : "1x Senior Mobile Engineer (React Native)";
+    } else if (plannerState.platform === "both") {
+      engRole =
+        plannerState.screens >= 8
+          ? "3x Cross-Platform Engineers (Web + Mobile)"
+          : "2x Senior Engineers (Web + React Native)";
+    } else {
+      engRole =
+        plannerState.screens >= 8
+          ? "2x Senior Fullstack Engineers (Next.js)"
+          : "1x Senior Fullstack Engineer (Next.js)";
+    }
+    if (plannerState.speed === 2) {
+      engRole += " + Velocity Pod";
+    }
+
+    // 3. Experience & Product Design
+    let designRole = "1x Senior Product Designer (UI/UX)";
+    if (plannerState.platform === "mobile") {
+      designRole = "1x Senior Mobile UX/UI Designer";
+    } else if (plannerState.platform === "both") {
+      designRole = "1x Senior Multi-Platform UX Designer";
+    }
+
+    // 4. Domain Specialist (AI / QA / Cadence)
+    let specialistRole = "1x Automated QA & CI/CD Lead";
+    if (plannerState.aiLevel === 1) {
+      specialistRole = "1x AI API & Prompt Integration Specialist";
+    } else if (plannerState.aiLevel === 2) {
+      specialistRole = "1x RAG & Vector Systems Specialist";
+    } else if (plannerState.aiLevel === 3) {
+      specialistRole = "1x Autonomous Agent Systems Specialist";
+    } else if (plannerState.speed === 2) {
+      specialistRole = "1x Dedicated QA & Velocity Engineer";
+    } else if (plannerState.screens >= 8) {
+      specialistRole = "1x Dedicated QA Automation Engineer";
+    }
+
+    const team = [leadRole, engRole, designRole, specialistRole];
+
+    let podName = "Core Web Pod";
+    if (plannerState.platform === "mobile") {
+      podName = "Native Mobile Pod";
+    } else if (plannerState.platform === "both") {
+      podName = "Cross-Platform Studio Pod";
+    }
+    if (plannerState.aiLevel >= 2) {
+      podName = `AI-Powered ${podName}`;
+    }
+    if (plannerState.speed === 2) {
+      podName = `Accelerated ${podName}`;
     }
 
     const deliverables = [
@@ -163,6 +226,7 @@ export const BudgetPlanner: React.FC<BudgetPlannerProps> = ({
       currencyCode: currency,
       weeksMin,
       weeksMax,
+      podName,
       teamComposition: team,
       deliverables,
       platformLabel,
@@ -394,7 +458,7 @@ export const BudgetPlanner: React.FC<BudgetPlannerProps> = ({
                     {calculation.teamComposition.map((member, idx) => (
                       <li key={idx} className="flex items-center gap-1.5">
                         <Check className="w-3 h-3 text-mosano-mint flex-shrink-0" />
-                        <span>{member}</span>
+                        <span className="truncate">{member}</span>
                       </li>
                     ))}
                   </ul>

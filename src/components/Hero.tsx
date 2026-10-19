@@ -10,10 +10,15 @@ import {
 } from "lucide-react";
 
 interface HeroProps {
+  currency: "EUR" | "USD";
   onOpenContact: () => void;
 }
 
-export const Hero: React.FC<HeroProps> = ({ onOpenContact }) => {
+export const Hero: React.FC<HeroProps> = ({ currency, onOpenContact }) => {
+  const symbol = currency === "USD" ? "$" : "€";
+  const eurToCurr = (eur: number) =>
+    currency === "USD" ? Math.round((eur * 1.1) / 1000) * 1000 : eur;
+
   return (
     <section id="overview" className="scroll-mt-24 relative overflow-hidden py-16 lg:py-24 bg-gradient-to-b from-white via-mosano-surface/40 to-white">
       {/* Decorative Brand Rotated Rectangles matching Mosano brand identity (.left-rec / .right-rec) */}
@@ -135,7 +140,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenContact }) => {
             <div className="p-5 sm:p-6 space-y-4 text-xs sm:text-sm">
               {/* Direct self-contained citable passage */}
               <p className="text-mosano-navy/85 leading-relaxed font-normal">
-                Building a production-ready software Minimum Viable Product (MVP) in 2026 typically costs between <strong>€18,000 and €58,000</strong> with a delivery timeframe of <strong>4 to 12 weeks</strong> when engineered by Mosano. Pricing scales with multi-platform scope, database architecture, and AI integration depth.
+                Building a production-ready software Minimum Viable Product (MVP) in 2026 typically costs between <strong>{symbol}{eurToCurr(18000).toLocaleString()} and {symbol}{eurToCurr(58000).toLocaleString()}</strong> (scaling to <strong>{symbol}{eurToCurr(95000).toLocaleString()}+</strong> for advanced AI-native systems) with a delivery timeframe of <strong>4 to 16 weeks</strong> when engineered by Mosano. Pricing scales with multi-platform scope, database architecture, and AI integration depth.
               </p>
 
               {/* Structured bulleted takeaways */}
@@ -143,7 +148,9 @@ export const Hero: React.FC<HeroProps> = ({ onOpenContact }) => {
                 <li className="flex items-start gap-2.5 p-3 rounded-xl bg-mosano-surface/50 border border-mosano-border/50">
                   <span className="w-1.5 h-1.5 rounded-full bg-mosano-blue mt-1.5 flex-shrink-0" />
                   <div>
-                    <strong className="text-mosano-navy font-semibold block">Web SaaS V1: €18,000 – €32,000</strong>
+                    <strong className="text-mosano-navy font-semibold block">
+                      Web SaaS V1: {symbol}{eurToCurr(18000).toLocaleString()} – {symbol}{eurToCurr(32000).toLocaleString()}
+                    </strong>
                     <span className="text-xs">4 to 7 weeks • Next.js, TypeScript, and Supabase for rapid revenue validation.</span>
                   </div>
                 </li>
@@ -151,7 +158,9 @@ export const Hero: React.FC<HeroProps> = ({ onOpenContact }) => {
                 <li className="flex items-start gap-2.5 p-3 rounded-xl bg-mosano-surface/50 border border-mosano-border/50">
                   <span className="w-1.5 h-1.5 rounded-full bg-mosano-magenta mt-1.5 flex-shrink-0" />
                   <div>
-                    <strong className="text-mosano-navy font-semibold block">Cross-Platform Mobile + Web: €32,000 – €58,000</strong>
+                    <strong className="text-mosano-navy font-semibold block">
+                      Cross-Platform Mobile + Web: {symbol}{eurToCurr(32000).toLocaleString()} – {symbol}{eurToCurr(58000).toLocaleString()}
+                    </strong>
                     <span className="text-xs">7 to 11 weeks • React Native &amp; Node microservices for unified iOS, Android, and web.</span>
                   </div>
                 </li>
@@ -159,7 +168,9 @@ export const Hero: React.FC<HeroProps> = ({ onOpenContact }) => {
                 <li className="flex items-start gap-2.5 p-3 rounded-xl bg-mosano-surface/50 border border-mosano-border/50">
                   <span className="w-1.5 h-1.5 rounded-full bg-mosano-violet mt-1.5 flex-shrink-0" />
                   <div>
-                    <strong className="text-mosano-navy font-semibold block">AI-Native Systems: €58,000 – €95,000+</strong>
+                    <strong className="text-mosano-navy font-semibold block">
+                      AI-Native Systems: {symbol}{eurToCurr(58000).toLocaleString()} – {symbol}{eurToCurr(95000).toLocaleString()}+
+                    </strong>
                     <span className="text-xs">11 to 16 weeks • Custom RAG pipelines, vector caching, agentic evals, and token controls.</span>
                   </div>
                 </li>

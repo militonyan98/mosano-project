@@ -128,7 +128,7 @@ export function LandingPageClient() {
       />
 
       {/* Hero Section */}
-      <Hero onOpenContact={handleOpenGeneralContact} />
+      <Hero currency={currency} onOpenContact={handleOpenGeneralContact} />
 
       {/* Calculator Section immediately following Hero */}
       <section className="relative -mt-8 sm:-mt-12 z-20">

@@ -100,6 +100,8 @@ export const CostGuideContent: React.FC<CostGuideContentProps> = ({
                 priceMax: selectedScope.priceMax,
                 weeksMin: selectedScope.weeksMin,
                 weeksMax: selectedScope.weeksMax,
+                podName: selectedScope.podName,
+                teamComposition: selectedScope.teamComposition,
                 summary: selectedScope.scopeSummaryText,
               }
             : null,
@@ -208,7 +210,7 @@ export const CostGuideContent: React.FC<CostGuideContentProps> = ({
               <div className="text-xl md:text-lg lg:text-2xl font-black text-mosano-navy tracking-tight whitespace-nowrap">
                 {symbol}{eurToCurr(32000).toLocaleString()} – {symbol}{eurToCurr(58000).toLocaleString()}
               </div>
-              <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-mosano-blue/10 text-xs font-bold text-mosano-blue mt-3 border border-mosano-blue/20">
+              <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-mosano-magenta/10 text-xs font-bold text-mosano-magenta mt-3 border border-mosano-magenta/20">
                 <Clock className="w-3.5 h-3.5" />
                 <span>7 to 11 Weeks Timeline</span>
               </div>
@@ -704,10 +706,13 @@ export const CostGuideContent: React.FC<CostGuideContentProps> = ({
                     <div className="p-3 rounded-xl bg-white border border-mosano-blue/20 shadow-sm flex items-center justify-between flex-wrap gap-2 text-xs">
                       <div>
                         <span className="text-[11px] font-bold text-mosano-blue block uppercase">
-                          Calculated Scope Snapshot:
+                          Scope Summary Snapshot:
                         </span>
-                        <span className="font-bold text-mosano-navy">
-                          {selectedScope.platformLabel} • {selectedScope.aiLabel}
+                        <span className="font-bold text-mosano-navy block">
+                          {selectedScope.platformLabel} • {plannerState?.screens || 5} Flows • {selectedScope.aiLabel}
+                        </span>
+                        <span className="text-mosano-blue font-semibold text-[11px] block mt-0.5">
+                          Pod: {selectedScope.podName} ({selectedScope.teamComposition.length} Experts)
                         </span>
                       </div>
                       <div className="text-right font-black text-mosano-magenta text-sm">

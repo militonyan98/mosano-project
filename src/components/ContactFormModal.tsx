@@ -97,6 +97,8 @@ export const ContactFormModal: React.FC<ContactFormModalProps> = ({
                 priceMax: selectedScope.priceMax,
                 weeksMin: selectedScope.weeksMin,
                 weeksMax: selectedScope.weeksMax,
+                podName: selectedScope.podName,
+                teamComposition: selectedScope.teamComposition,
                 summary: selectedScope.scopeSummaryText,
               }
             : null,
@@ -211,10 +213,13 @@ export const ContactFormModal: React.FC<ContactFormModalProps> = ({
                 <div className="mt-4 p-3 rounded-xl bg-white border border-mosano-blue/20 shadow-sm flex items-center justify-between flex-wrap gap-2 text-xs">
                   <div>
                     <span className="text-[11px] font-bold text-mosano-blue block uppercase">
-                      Calculated Scope Snapshot:
+                      Scope Summary Snapshot:
                     </span>
-                    <span className="font-bold text-mosano-navy">
-                      {selectedScope.platformLabel} • {selectedScope.aiLabel}
+                    <span className="font-bold text-mosano-navy block">
+                      {selectedScope.platformLabel} • {plannerState?.screens || 5} Flows • {selectedScope.aiLabel}
+                    </span>
+                    <span className="text-mosano-mint font-semibold text-[11px] block mt-0.5">
+                      Pod: {selectedScope.podName} ({selectedScope.teamComposition.length} Experts)
                     </span>
                   </div>
                   <div className="text-right font-black text-mosano-magenta text-sm">
