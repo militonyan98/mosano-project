@@ -37,7 +37,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenContact }) => {
         <div className="text-center space-y-6">
           {/* Main Headline */}
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-mosano-navy tracking-tight leading-[1.12] max-w-4xl mx-auto">
-            How Much Does It Cost to Build an MVP in <span className="text-mosano-blue underline decoration-mosano-yellow decoration-4 underline-offset-4">2026?</span>
+            How Much Does It Cost to Build an MVP in <span className="text-mosano-blue">2026?</span>
           </h1>
 
           <p className="text-base sm:text-lg text-mosano-navy/75 font-normal leading-relaxed max-w-2xl mx-auto">

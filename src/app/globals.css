@@ -67,25 +67,6 @@ body {
   border-bottom: 2px solid #C6EBBE;
 }
 
-/* Custom Scrollbar for Desktop */
-::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-}
-
-::-webkit-scrollbar-track {
-  background: #F6F7FC;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #C6EBBE;
-  border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #1E22AA;
-}
-
 @keyframes fadeIn {
   from { opacity: 0; transform: scale(0.98); }
   to { opacity: 1; transform: scale(1); }
@@ -94,3 +75,324 @@ body {
 .animate-fade-in {
   animation: fadeIn 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
+
+/* Exact Mosano @font-face declarations from mosano.eu/team/ */
+@font-face {
+  font-family: Clan;
+  font-style: normal;
+  font-weight: 900;
+  src: url(/static/Clan-Black-760eba4049b929e3672f2d8ea81b7339.otf) format("opentype"),
+       url(https://mosano.eu/static/Clan-Black-760eba4049b929e3672f2d8ea81b7339.otf) format("opentype");
+}
+@font-face {
+  font-family: Clan;
+  font-style: normal;
+  font-weight: 700;
+  src: url(/static/Clan-Bold-52b1e36de50fdabed8bddcfd4ebc535c.otf) format("opentype"),
+       url(/static/Clan-BoldSC-6087905f3d4ccad5987118891f04031e.otf) format("opentype"),
+       url(https://mosano.eu/static/Clan-Bold-52b1e36de50fdabed8bddcfd4ebc535c.otf) format("opentype");
+}
+@font-face {
+  font-family: Clan book;
+  font-style: normal;
+  font-weight: 400;
+  src: url(/static/Clan-Book-83d51544a4c8ebf6329d54fa3f1260b8.otf) format("opentype"),
+       url(https://mosano.eu/static/Clan-Book-83d51544a4c8ebf6329d54fa3f1260b8.otf) format("opentype");
+}
+@font-face {
+  font-family: Clan booksc;
+  font-style: normal;
+  font-weight: 400;
+  src: url(/static/Clan-BookSC-549cf9a06a71e71f6fe70b4df97dcc46.otf) format("opentype"),
+       url(https://mosano.eu/static/Clan-BookSC-549cf9a06a71e71f6fe70b4df97dcc46.otf) format("opentype");
+}
+@font-face {
+  font-family: Clan newssc;
+  font-style: normal;
+  font-weight: 400;
+  src: url(/static/Clan-NewsSC-3662443f6c98b48ac77ba3afc2772274.otf) format("opentype"),
+       url(https://mosano.eu/static/Clan-NewsSC-3662443f6c98b48ac77ba3afc2772274.otf) format("opentype");
+}
+@font-face {
+  font-family: Clan;
+  font-style: normal;
+  font-weight: 100;
+  src: url(/static/Clan-ThinSC-ddfc2e400aa01273081664eb0d532795.otf) format("opentype"),
+       url(/static/Clan-Thin-70737ef4c03d11723cde67e1b06f15bb.otf) format("opentype"),
+       url(https://mosano.eu/static/Clan-Thin-70737ef4c03d11723cde67e1b06f15bb.otf) format("opentype");
+}
+@font-face {
+  font-family: Clan ultrasc;
+  font-style: normal;
+  font-weight: 400;
+  src: url(/static/Clan-UltraSC-28ff31fb0041187d3bca5f22fedba9e8.otf) format("opentype"),
+       url(https://mosano.eu/static/Clan-UltraSC-28ff31fb0041187d3bca5f22fedba9e8.otf) format("opentype");
+}
+@font-face {
+  font-family: Clanlf book;
+  font-style: normal;
+  font-weight: 400;
+  src: url(/static/ClanLF-Book-8aaac644dbde8c746c4b0ad7fb23dc13.otf) format("opentype"),
+       url(https://mosano.eu/static/ClanLF-Book-8aaac644dbde8c746c4b0ad7fb23dc13.otf) format("opentype");
+}
+@font-face {
+  font-family: Clan ultra;
+  font-style: normal;
+  font-weight: 400;
+  src: url(/static/Clan-Ultra-a38791675c6f97b944b0e5c4d0bece09.otf) format("opentype"),
+       url(https://mosano.eu/static/Clan-Ultra-a38791675c6f97b944b0e5c4d0bece09.otf) format("opentype");
+}
+@font-face {
+  font-family: Clan news;
+  font-style: normal;
+  font-weight: 400;
+  src: url(/static/Clan-News-3405fc1533bfe0809f940356f92ce38d.otf) format("opentype"),
+       url(https://mosano.eu/static/Clan-News-3405fc1533bfe0809f940356f92ce38d.otf) format("opentype");
+}
+@font-face {
+  font-family: Clan;
+  font-style: normal;
+  font-weight: 500;
+  src: url(/static/Clan-Medium-78ef202f9b3579f0663b474ba3fd5be9.otf) format("opentype"),
+       url(https://mosano.eu/static/Clan-Medium-78ef202f9b3579f0663b474ba3fd5be9.otf) format("opentype");
+}
+
+/* Exact Mosano Footer from mosano.eu/team/ */
+.footer {
+  background-color: #fff;
+  bottom: 0;
+  box-sizing: border-box;
+  color: #333;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  height: 80px;
+  left: 0;
+  line-height: 20px;
+  position: relative;
+  right: 0;
+  top: auto;
+}
+
+.footer *,
+.footer *:before,
+.footer *:after {
+  box-sizing: border-box;
+}
+
+.footer svg:not(:root) {
+  display: inline;
+  overflow: hidden;
+  vertical-align: middle;
+}
+
+.footer-container {
+  align-items: center;
+  background-color: #fff;
+  bottom: auto;
+  display: flex;
+  height: 80px;
+  justify-content: center;
+  left: 6%;
+  position: absolute;
+  right: 6%;
+  top: auto;
+  width: auto;
+}
+
+.social-media-container-footer {
+  bottom: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  left: 0;
+  margin-top: 0;
+  position: relative;
+  top: auto;
+  width: 200px;
+}
+
+.w-inline-block {
+  display: inline-block;
+  max-width: 100%;
+}
+
+.social-media-block-1 {
+  height: 34px;
+  margin-right: 10px;
+  width: 34px;
+}
+
+.hover-social:hover > g > g > g > g > g > path {
+  fill: #e31c79;
+  color: #e31c79;
+}
+
+.div-block-50 {
+  bottom: auto;
+  display: flex;
+  left: auto;
+  position: absolute;
+  right: 0;
+  top: auto;
+}
+
+.menu-title {
+  color: #1e22aa;
+  font-family: Clan news, sans-serif;
+  font-size: 14px;
+  font-weight: 100;
+  margin-right: 10px;
+  padding: 0 10px;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.menu-selected,
+.menu-title.w--current,
+.menu-title:hover {
+  font-family: Clan, sans-serif;
+  font-weight: 700;
+}
+
+.menu-title-left {
+  bottom: auto;
+  color: #1e22aa;
+  font-family: Clan news, sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  left: auto;
+  margin-left: 10px;
+  margin-right: 0;
+  padding: 0 0 0 10px;
+  position: static;
+  right: 0;
+  text-decoration: none;
+  text-transform: uppercase;
+  top: auto;
+  width: 130px;
+}
+
+.menu-title-left.w--current,
+.menu-title-left:hover {
+  font-family: Clan, sans-serif;
+  font-weight: 700;
+}
+
+.div-block-35 {
+  align-items: stretch;
+  align-self: auto;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  left: 0;
+  margin-top: 0;
+  position: absolute;
+  width: 200px;
+}
+
+.text-block-15 {
+  left: 0;
+  position: absolute;
+}
+
+.text-block-15.footer-title-right {
+  -ms-grid-row-align: auto;
+  align-self: auto;
+  color: #1e22aa;
+  font-family: Clan news, sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  position: relative;
+}
+
+@media (max-width: 991px) {
+  .footer {
+    height: 110px;
+  }
+  .footer-container {
+    flex-direction: column;
+    flex-wrap: nowrap;
+    height: auto;
+    margin-top: 20px;
+  }
+  .div-block-50,
+  .social-media-container-footer {
+    position: static;
+  }
+  .div-block-50 {
+    align-self: flex-end;
+    justify-content: center;
+  }
+  .div-block-35 {
+    align-self: flex-start;
+    order: -1;
+    position: static;
+  }
+  .div-block-112 {
+    align-self: center;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    width: 100%;
+  }
+}
+
+@media (max-width: 767px) {
+  .footer {
+    height: 120px;
+  }
+  .footer-container {
+    align-content: center;
+    align-items: flex-start;
+    flex-direction: column;
+    flex-wrap: wrap;
+    height: auto;
+  }
+  .social-media-container-footer {
+    -ms-grid-row-align: center;
+    align-self: center;
+    position: static;
+  }
+  .div-block-112 {
+    align-items: center;
+    flex-direction: column;
+    height: auto;
+    margin-top: 10px;
+  }
+  .div-block-50 {
+    -ms-grid-row-align: auto;
+    align-self: auto;
+    justify-content: center;
+    margin-bottom: 5px;
+    margin-top: 5px;
+    order: 1;
+    position: static;
+  }
+  .div-block-35 {
+    justify-content: center;
+    left: auto;
+    margin-bottom: 0;
+    margin-top: 0;
+    order: 1;
+    position: static;
+    width: 100%;
+  }
+  .text-block-15.footer-title-right {
+    font-size: 10px;
+  }
+}
+
+@media (max-width: 479px) {
+  .div-block-112 {
+    flex-direction: column;
+    height: auto;
+  }
+  .div-block-35 {
+    width: 100%;
+  }
+  .text-block-15.footer-title-right {
+    font-size: 10px;
+  }
+}
+
+

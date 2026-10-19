@@ -6,9 +6,6 @@ export const metadata: Metadata = {
   title: "How Much Does It Cost to Build an MVP in 2026? | Mosano",
   description:
     "Evidence-based 2026 MVP development cost guide & budget planner for founders. Compare Web, Mobile & AI costs, avoid hidden traps, and scope your version 1.",
-  alternates: {
-    canonical: "https://mosano.eu/mvp-cost-2026",
-  },
   keywords: [
     "MVP cost 2026",
     "how much to build an MVP",
@@ -21,6 +18,23 @@ export const metadata: Metadata = {
   authors: [{ name: "Hermine Militonyan" }, { name: "Mosano Studio", url: "https://mosano.eu" }],
   creator: "Mosano",
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://mosano.eu"),
+  icons: {
+    icon: [
+      { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+      { url: "/favicon.ico", sizes: "any" },
+    ],
+    apple: [
+      { url: "/icons/icon-48x48.png", sizes: "48x48", type: "image/png" },
+      { url: "/icons/icon-72x72.png", sizes: "72x72", type: "image/png" },
+      { url: "/icons/icon-96x96.png", sizes: "96x96", type: "image/png" },
+      { url: "/icons/icon-144x144.png", sizes: "144x144", type: "image/png" },
+      { url: "/icons/icon-192x192.png", sizes: "192x192", type: "image/png" },
+      { url: "/icons/icon-256x256.png", sizes: "256x256", type: "image/png" },
+      { url: "/icons/icon-384x384.png", sizes: "384x384", type: "image/png" },
+      { url: "/icons/icon-512x512.png", sizes: "512x512", type: "image/png" },
+    ],
+  },
+  manifest: "/manifest.webmanifest",
   openGraph: {
     title: "How Much Does It Cost to Build an MVP in 2026? | Mosano",
     description:
@@ -29,13 +43,28 @@ export const metadata: Metadata = {
     siteName: "Mosano — Mobile & Web Development Studio",
     locale: "en_US",
     type: "article",
+    images: [
+      {
+        url: "https://images.prismic.io/mosano-website/a0fa3059-966e-4db9-a277-3d198f102c66_High%20Pitch.png?ixlib=gatsbyFP&auto=compress%2Cformat&fit=max&q=50&rect=0%2C95%2C900%2C450&w=1000&h=500",
+        width: 1000,
+        height: 500,
+        alt: "We provide software development services that give our clients the opportunity to grow their business and change their industry.",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
+    site: "mosanotech",
+    creator: "mosanotech",
     title: "How Much Does It Cost to Build an MVP in 2026? | Mosano",
     description:
       "Evidence-based 2026 MVP development cost guide & budget planner for founders. Compare Web, Mobile & AI costs, avoid hidden traps, and scope your version 1.",
-    creator: "@mosanostudio",
+    images: [
+      {
+        url: "https://images.prismic.io/mosano-website/a0fa3059-966e-4db9-a277-3d198f102c66_High%20Pitch.png?ixlib=gatsbyFP&auto=compress%2Cformat&fit=max&q=50&rect=0%2C95%2C900%2C450&w=1000&h=500",
+        alt: "We provide software development services that give our clients the opportunity to grow their business and change their industry.",
+      },
+    ],
   },
   robots: {
     index: true,
@@ -58,6 +87,7 @@ export default function RootLayout({
         "@type": "TechArticle",
         "headline": "How Much Does It Cost to Build an MVP in 2026? A Founder's Practical Guide & Budget Planner",
         "description": "Comprehensive engineering benchmarks and interactive planning tool for early-stage software startup founders budgeting an MVP in 2026.",
+        "image": "https://images.prismic.io/mosano-website/a0fa3059-966e-4db9-a277-3d198f102c66_High%20Pitch.png?ixlib=gatsbyFP&auto=compress%2Cformat&fit=max&q=50&rect=0%2C95%2C900%2C450&w=1000&h=500",
         "author": {
           "@type": "Person",
           "name": "Hermine Militonyan",
@@ -66,10 +96,15 @@ export default function RootLayout({
           "@type": "Organization",
           "name": "Mosano",
           "url": "https://mosano.eu",
-          "logo": "https://mosano.eu/logo.png",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://mosano.eu/icons/icon-512x512.png",
+            "width": 512,
+            "height": 512,
+          },
         },
         "datePublished": "2026-10-17",
-        "dateModified": "2026-10-17",
+        "dateModified": "2026-10-18",
       },
       {
         "@type": "SoftwareApplication",
@@ -95,18 +130,34 @@ export default function RootLayout({
           },
           {
             "@type": "Question",
-            "name": "How long does it take to build a software MVP in 2026?",
+            "name": "How long does it take to launch an MVP?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "With contemporary stacks (Next.js, Supabase, React Native, serverless cloud backends), a focused MVP should take between 4 and 10 weeks to reach production launch.",
+              "text": "With modern frameworks and cloud tooling, a focused MVP should take 4 to 10 weeks to reach production. Quotes exceeding 12 weeks for V1 typically signal bloated scope.",
             },
           },
           {
             "@type": "Question",
-            "name": "What affects the cost of building an AI-powered MVP?",
+            "name": "What affects the cost of an AI-powered MVP?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "AI MVP costs are determined by model APIs vs fine-tuning, RAG vector indexing, token volume caching, and human-in-the-loop guardrails. AI-native applications typically require 20% to 35% higher engineering investment than standard CRUD applications.",
+              "text": "Key cost drivers include model architecture (hosted APIs vs fine-tuning), RAG/vector retrieval setup, token caching, and human-in-the-loop evals. Expect AI features to add ~20%–35% in engineering effort.",
+            },
+          },
+          {
+            "@type": "Question",
+            "name": "Why partner with Mosano over freelancers or big agencies?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Mosano provides the focus and caliber of a senior team without full-time hiring friction or agency overhead. Our pods deliver top-tier craft, direct Slack collaboration, and 100% IP ownership.",
+            },
+          },
+          {
+            "@type": "Question",
+            "name": "Does Mosano sign Non-Disclosure Agreements (NDAs)?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. We treat your IP and proprietary logic with complete confidentiality and regularly sign mutual NDAs before reviewing product details.",
             },
           },
         ],
@@ -117,7 +168,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <link rel="icon" href="/favicon.ico" sizes="any" />
+        <meta name="theme-color" content="#3D63AE" />
+        <meta
+          name="image"
+          content="https://images.prismic.io/mosano-website/a0fa3059-966e-4db9-a277-3d198f102c66_High%20Pitch.png?ixlib=gatsbyFP&auto=compress%2Cformat&fit=max&q=50&rect=0%2C95%2C900%2C450&w=1000&h=500"
+        />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}

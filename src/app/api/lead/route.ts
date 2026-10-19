@@ -34,7 +34,32 @@ export async function POST(request: Request) {
 
     const n8nWebhookUrl = process.env.N8N_WEBHOOK_URL;
 
+    const nameParts = name.trim().split(/\s+/);
+    const firstName = nameParts[0] || "";
+    const lastName = nameParts.slice(1).join(" ") || "-";
+
+    const formattedMessage = [
+      `Target Launch: ${launchGoal || "Not specified"}`,
+      scopeSummary
+        ? `Calculated Scope: ${scopeSummary.platform} • ${scopeSummary.aiLevel} (${scopeSummary.screens} screens)`
+        : "Scope: Direct Scoping Inquiry",
+      scopeSummary
+        ? `Estimated Budget: ${currency || "EUR"} ${scopeSummary.priceMin?.toLocaleString()} – ${scopeSummary.priceMax?.toLocaleString()} (${scopeSummary.weeksMin}–${scopeSummary.weeksMax} weeks)`
+        : null,
+      scopeSummary?.summary ? `Details: ${scopeSummary.summary}` : null,
+      `UTM Source: ${utmSource || "direct"} / ${utmMedium || "none"} (${utmCampaign || "mvp_cost_2026"})`,
+    ]
+      .filter(Boolean)
+      .join("\n");
+
     const payload = {
+      // Fields matching n8n Contact Form Workflow #4337
+      "First Name": firstName,
+      "Last Name": lastName,
+      Email: email.trim().toLowerCase(),
+      Company: (projectName || "Unnamed Project").trim(),
+      Message: formattedMessage,
+      // Full structured Mosano Lead & Budget Planner data
       lead: {
         name: name.trim(),
         email: email.trim().toLowerCase(),
@@ -57,27 +82,67 @@ export async function POST(request: Request) {
     };
 
     if (n8nWebhookUrl) {
-      // Forward to n8n webhook
-      try {
-        const n8nResponse = await fetch(n8nWebhookUrl, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "User-Agent": "Mosano-Lead-Router/1.0",
-          },
-          body: JSON.stringify(payload),
-        });
+      // Forward to n8n Form Trigger (/form/...) or Webhook (/webhook/...)
+      // Use an AbortSignal timeout and bound the wait time so slow/unreachable n8n endpoints
+      // or workflows that wait on downstream nodes never hang the client form submission.
+      const sendToN8n = async () => {
+        try {
+          const controller = new AbortController();
+          const abortTimer = setTimeout(() => controller.abort(), 8000);
 
-        if (!n8nResponse.ok) {
-          console.error(
-            `n8n webhook returned status ${n8nResponse.status}:`,
-            await n8nResponse.text()
-          );
+          const isFormTrigger = n8nWebhookUrl.includes("/form/");
+          let n8nResponse: Response;
+
+          if (isFormTrigger) {
+            const formData = new FormData();
+            formData.append("field-0", firstName);
+            formData.append("field-1", lastName);
+            formData.append("field-2", email.trim().toLowerCase());
+            formData.append(
+              "field-3",
+              `${(projectName || "Unnamed Project").trim()} (${email.trim().toLowerCase()})`
+            );
+            formData.append("field-4", formattedMessage);
+
+            n8nResponse = await fetch(n8nWebhookUrl, {
+              method: "POST",
+              headers: {
+                "User-Agent": "Mosano-Lead-Router/1.0",
+              },
+              body: formData,
+              signal: controller.signal,
+            });
+          } else {
+            n8nResponse = await fetch(n8nWebhookUrl, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                "User-Agent": "Mosano-Lead-Router/1.0",
+              },
+              body: JSON.stringify(payload),
+              signal: controller.signal,
+            });
+          }
+
+          clearTimeout(abortTimer);
+
+          if (!n8nResponse.ok) {
+            console.error(
+              `n8n endpoint returned status ${n8nResponse.status}:`,
+              await n8nResponse.text()
+            );
+          }
+        } catch (webhookError) {
+          console.error("Failed to post payload to n8n endpoint:", webhookError);
+          // Do not crash client request; acknowledge reception to user while logging failure
         }
-      } catch (webhookError) {
-        console.error("Failed to post payload to n8n webhook:", webhookError);
-        // Do not crash client request; acknowledge reception to user while logging failure
-      }
+      };
+
+      // Wait up to 1.5s for fast n8n acknowledgment; otherwise let it complete in background
+      await Promise.race([
+        sendToN8n(),
+        new Promise((resolve) => setTimeout(resolve, 1500)),
+      ]);
     } else {
       console.log(
         "[Mosano Dev/Mock] No N8N_WEBHOOK_URL configured. Payload logged successfully:",

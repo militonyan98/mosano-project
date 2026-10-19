@@ -159,9 +159,9 @@ export const ContactFormModal: React.FC<ContactFormModalProps> = ({
               <span className="text-xs font-bold text-mosano-magenta tracking-wider uppercase">
                 Inquiry Dispatched
               </span>
-              <h3 className="text-2xl sm:text-3xl font-black text-mosano-navy">
+              <h2 className="text-2xl sm:text-3xl font-black text-mosano-navy">
                 Scope Received. Let’s Build.
-              </h3>
+              </h2>
               <p className="text-sm text-mosano-navy/80 leading-relaxed max-w-md mx-auto">
                 Thank you, <strong>{formData.name}</strong>. Our engineering leads have received your scope specifications. We will review your architecture requirements and reach out within 24 business hours.
               </p>
@@ -199,9 +199,9 @@ export const ContactFormModal: React.FC<ContactFormModalProps> = ({
                   Project Scoping Session
                 </span>
               </div>
-              <h3 className="text-2xl font-black text-mosano-navy mt-1">
+              <h2 className="text-2xl font-black text-mosano-navy mt-1">
                 Discuss Your MVP with Mosano
-              </h3>
+              </h2>
               <p className="text-xs sm:text-sm text-mosano-navy/70 mt-1 leading-relaxed">
                 Connect with our senior engineering team at Mosano. No sales pitches—just real technical architecture, scope validation, and timelines.
               </p>

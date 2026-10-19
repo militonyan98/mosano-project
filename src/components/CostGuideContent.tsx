@@ -1,30 +1,143 @@
 "use client";
 
-import React, { useState } from "react";
-import { trackCTAClick } from "@/lib/analytics";
+import React, { useState, useEffect } from "react";
+import { trackEvent } from "@/lib/analytics";
+import { ScopeCalculation, PlannerState } from "./BudgetPlanner";
 import {
   ChevronDown,
   ChevronUp,
-  ArrowRight,
   TrendingUp,
   ShieldAlert,
   Sliders,
-  DollarSign,
   Cpu,
   Layers,
   Clock,
+  Sparkles,
+  CheckCircle2,
+  Lock,
+  Loader2,
+  Send,
+  AlertCircle,
+  Building,
+  Mail,
+  User,
+  Calendar,
 } from "lucide-react";
 
 interface CostGuideContentProps {
   currency: "EUR" | "USD";
-  onOpenContact: () => void;
+  onOpenContact?: () => void;
+  selectedScope?: ScopeCalculation | null;
+  plannerState?: PlannerState | null;
 }
 
 export const CostGuideContent: React.FC<CostGuideContentProps> = ({
   currency,
-  onOpenContact,
+  selectedScope,
+  plannerState,
 }) => {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
+
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    projectName: "",
+    launchGoal: "4–8 weeks (ASAP)",
+  });
+  const [formStarted, setFormStarted] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [utms, setUtms] = useState({
+    source: "",
+    medium: "",
+    campaign: "",
+  });
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const params = new URLSearchParams(window.location.search);
+      setUtms({
+        source: params.get("utm_source") || "direct",
+        medium: params.get("utm_medium") || "none",
+        campaign: params.get("utm_campaign") || "mvp_cost_2026",
+      });
+    }
+  }, []);
+
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
+    if (!formStarted) {
+      setFormStarted(true);
+      trackEvent("form_start", {
+        has_scope_selected: !!selectedScope,
+      });
+    }
+    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    setErrorMessage(null);
+
+    try {
+      const response = await fetch("/api/lead", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          projectName: formData.projectName,
+          launchGoal: formData.launchGoal,
+          scopeSummary: selectedScope
+            ? {
+                platform: selectedScope.platformLabel,
+                aiLevel: selectedScope.aiLabel,
+                screens: plannerState?.screens || 5,
+                priceMin: selectedScope.priceMin,
+                priceMax: selectedScope.priceMax,
+                weeksMin: selectedScope.weeksMin,
+                weeksMax: selectedScope.weeksMax,
+                summary: selectedScope.scopeSummaryText,
+              }
+            : null,
+          currency,
+          utmSource: utms.source,
+          utmMedium: utms.medium,
+          utmCampaign: utms.campaign,
+        }),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.error || "Failed to submit inquiry.");
+      }
+
+      setSubmitted(true);
+
+      trackEvent("generate_lead", {
+        platform: selectedScope?.platformLabel || "Direct Scoping Call",
+        ai_level: selectedScope?.aiLabel || "Standard",
+        currency,
+        value: selectedScope
+          ? (selectedScope.priceMin + selectedScope.priceMax) / 2
+          : 25000,
+        utm_source: utms.source,
+        utm_campaign: utms.campaign,
+      });
+    } catch (err: any) {
+      console.error("Submission failed:", err);
+      setErrorMessage(
+        err.message ||
+          "Something went wrong. Please check your connection and try again."
+      );
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const toggleFaq = (index: number) => {
     setOpenFaq(openFaq === index ? null : index);
@@ -59,11 +172,11 @@ export const CostGuideContent: React.FC<CostGuideContentProps> = ({
           <div className="p-6 sm:p-7 rounded-2xl bg-white border border-mosano-border shadow-sm hover:border-mosano-blue/50 hover:shadow-md transition-all flex flex-col justify-between group">
             <div>
               <div className="flex items-center justify-between mb-2">
-                <span className="text-xs font-bold uppercase text-mosano-blue tracking-wider">
+                <h3 className="text-xs font-bold uppercase text-mosano-blue tracking-wider">
                   Tier 1 • Focused V1
-                </span>
+                </h3>
               </div>
-              <div className="text-3xl sm:text-4xl font-black text-mosano-navy tracking-tight">
+              <div className="text-xl md:text-lg lg:text-2xl font-black text-mosano-navy tracking-tight whitespace-nowrap">
                 {symbol}{eurToCurr(18000).toLocaleString()} – {symbol}{eurToCurr(32000).toLocaleString()}
               </div>
               <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-mosano-surface text-xs font-bold text-mosano-blue mt-3 border border-mosano-border/60">
@@ -88,11 +201,11 @@ export const CostGuideContent: React.FC<CostGuideContentProps> = ({
             </div>
             <div>
               <div className="flex items-center justify-between mb-2">
-                <span className="text-xs font-bold uppercase text-mosano-magenta tracking-wider">
+                <h3 className="text-xs font-bold uppercase text-mosano-magenta tracking-wider">
                   Tier 2 • Growth MVP
-                </span>
+                </h3>
               </div>
-              <div className="text-3xl sm:text-4xl font-black text-mosano-navy tracking-tight">
+              <div className="text-xl md:text-lg lg:text-2xl font-black text-mosano-navy tracking-tight whitespace-nowrap">
                 {symbol}{eurToCurr(32000).toLocaleString()} – {symbol}{eurToCurr(58000).toLocaleString()}
               </div>
               <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-mosano-blue/10 text-xs font-bold text-mosano-blue mt-3 border border-mosano-blue/20">
@@ -113,11 +226,11 @@ export const CostGuideContent: React.FC<CostGuideContentProps> = ({
           <div className="p-6 sm:p-7 rounded-2xl bg-white border border-mosano-border shadow-sm hover:border-mosano-violet/50 hover:shadow-md transition-all flex flex-col justify-between group">
             <div>
               <div className="flex items-center justify-between mb-2">
-                <span className="text-xs font-bold uppercase text-mosano-violet tracking-wider">
+                <h3 className="text-xs font-bold uppercase text-mosano-violet tracking-wider">
                   Tier 3 • AI / Scaled MVP
-                </span>
+                </h3>
               </div>
-              <div className="text-3xl sm:text-4xl font-black text-mosano-navy tracking-tight">
+              <div className="text-xl md:text-lg lg:text-2xl font-black text-mosano-navy tracking-tight whitespace-nowrap">
                 {symbol}{eurToCurr(58000).toLocaleString()} – {symbol}{eurToCurr(95000).toLocaleString()}+
               </div>
               <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-mosano-surface text-xs font-bold text-mosano-violet mt-3 border border-mosano-border/60">
@@ -159,78 +272,78 @@ export const CostGuideContent: React.FC<CostGuideContentProps> = ({
           <table className="w-full text-left border-collapse text-xs sm:text-sm">
             <thead>
               <tr className="bg-mosano-surface border-b border-mosano-border text-mosano-navy font-bold">
-                <th className="p-4 sm:p-5">Platform Archetype</th>
-                <th className="p-4 sm:p-5">Cost Multiplier</th>
-                <th className="p-4 sm:p-5">Time to Live</th>
-                <th className="p-4 sm:p-5">Best Fit &amp; Recommendation</th>
+                <th className="p-4 sm:p-5 w-[28%]">Platform Archetype</th>
+                <th className="p-4 sm:p-5 w-[19%] min-w-[150px] whitespace-nowrap">Cost Multiplier</th>
+                <th className="p-4 sm:p-5 w-[15%] whitespace-nowrap">Time to Live</th>
+                <th className="p-4 sm:p-5 w-[38%] max-w-md">Best Fit &amp; Recommendation</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-mosano-border">
               <tr className="hover:bg-mosano-surface/50 transition-colors">
                 <td className="p-4 sm:p-5 font-bold text-mosano-navy">
                   <div className="flex items-center gap-2">
-                    <span className="w-2 h-2 rounded-full bg-emerald-500" />
+                    <span className="w-2 h-2 rounded-full bg-emerald-500 flex-shrink-0" />
                     <span>Modern Web SaaS (Next.js / TypeScript)</span>
                   </div>
                 </td>
-                <td className="p-4 sm:p-5">
-                  <span className="px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 font-bold text-xs border border-emerald-200">
+                <td className="p-4 sm:p-5 whitespace-nowrap">
+                  <span className="inline-block whitespace-nowrap px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-700 font-bold text-xs border border-emerald-200">
                     1.0x (Baseline)
                   </span>
                 </td>
-                <td className="p-4 sm:p-5 font-medium">4 – 8 Weeks</td>
-                <td className="p-4 sm:p-5 text-mosano-navy/80">
+                <td className="p-4 sm:p-5 font-medium whitespace-nowrap">4 – 8 Weeks</td>
+                <td className="p-4 sm:p-5 text-mosano-navy/80 max-w-md">
                   B2B software, customer portals, fast iteration cycles. Recommended for most V1s.
                 </td>
               </tr>
               <tr className="hover:bg-mosano-surface/50 transition-colors">
                 <td className="p-4 sm:p-5 font-bold text-mosano-navy">
                   <div className="flex items-center gap-2">
-                    <span className="w-2 h-2 rounded-full bg-mosano-blue" />
+                    <span className="w-2 h-2 rounded-full bg-mosano-blue flex-shrink-0" />
                     <span>Cross-Platform Mobile (React Native)</span>
                   </div>
                 </td>
-                <td className="p-4 sm:p-5">
-                  <span className="px-2 py-0.5 rounded-full bg-blue-50 text-mosano-blue font-bold text-xs border border-blue-200">
+                <td className="p-4 sm:p-5 whitespace-nowrap">
+                  <span className="inline-block whitespace-nowrap px-2.5 py-0.5 rounded-full bg-blue-50 text-mosano-blue font-bold text-xs border border-blue-200">
                     1.25x – 1.35x
                   </span>
                 </td>
-                <td className="p-4 sm:p-5 font-medium">6 – 10 Weeks</td>
-                <td className="p-4 sm:p-5 text-mosano-navy/80">
+                <td className="p-4 sm:p-5 font-medium whitespace-nowrap">6 – 10 Weeks</td>
+                <td className="p-4 sm:p-5 text-mosano-navy/80 max-w-md">
                   Apps requiring camera, push alerts, offline storage, or App Store presence.
                 </td>
               </tr>
               <tr className="hover:bg-mosano-surface/50 transition-colors">
                 <td className="p-4 sm:p-5 font-bold text-mosano-navy">
                   <div className="flex items-center gap-2">
-                    <span className="w-2 h-2 rounded-full bg-mosano-magenta" />
+                    <span className="w-2 h-2 rounded-full bg-mosano-magenta flex-shrink-0" />
                     <span>AI-Native Application (RAG / LLMs)</span>
                   </div>
                 </td>
-                <td className="p-4 sm:p-5">
-                  <span className="px-2 py-0.5 rounded-full bg-pink-50 text-mosano-magenta font-bold text-xs border border-pink-200">
+                <td className="p-4 sm:p-5 whitespace-nowrap">
+                  <span className="inline-block whitespace-nowrap px-2.5 py-0.5 rounded-full bg-pink-50 text-mosano-magenta font-bold text-xs border border-pink-200">
                     1.35x – 1.6x
                   </span>
                 </td>
-                <td className="p-4 sm:p-5 font-medium">8 – 14 Weeks</td>
-                <td className="p-4 sm:p-5 text-mosano-navy/80">
+                <td className="p-4 sm:p-5 font-medium whitespace-nowrap">8 – 14 Weeks</td>
+                <td className="p-4 sm:p-5 text-mosano-navy/80 max-w-md">
                   Domain copilots, document intelligence, and automated agent workflows.
                 </td>
               </tr>
               <tr className="hover:bg-mosano-surface/50 transition-colors bg-red-50/20">
                 <td className="p-4 sm:p-5 font-bold text-mosano-navy">
                   <div className="flex items-center gap-2">
-                    <span className="w-2 h-2 rounded-full bg-red-500" />
+                    <span className="w-2 h-2 rounded-full bg-red-500 flex-shrink-0" />
                     <span>Dual Native (Swift + Kotlin)</span>
                   </div>
                 </td>
-                <td className="p-4 sm:p-5">
-                  <span className="px-2 py-0.5 rounded-full bg-red-50 text-red-700 font-bold text-xs border border-red-200">
+                <td className="p-4 sm:p-5 whitespace-nowrap">
+                  <span className="inline-block whitespace-nowrap px-2.5 py-0.5 rounded-full bg-red-50 text-red-700 font-bold text-xs border border-red-200">
                     2.0x – 2.5x
                   </span>
                 </td>
-                <td className="p-4 sm:p-5 font-medium">14 – 20 Weeks</td>
-                <td className="p-4 sm:p-5 text-mosano-navy/80">
+                <td className="p-4 sm:p-5 font-medium whitespace-nowrap">14 – 20 Weeks</td>
+                <td className="p-4 sm:p-5 text-mosano-navy/80 max-w-md">
                   <strong className="text-red-600">Rarely advised for V1</strong> due to high initial maintenance and dual engineering pod overhead.
                 </td>
               </tr>
@@ -344,9 +457,9 @@ export const CostGuideContent: React.FC<CostGuideContentProps> = ({
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           <div className="p-6 rounded-2xl bg-red-50/40 border border-red-200 shadow-sm space-y-4">
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-red-100 text-red-700 font-bold text-xs uppercase tracking-wide">
+            <h3 className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-red-100 text-red-700 font-bold text-xs uppercase tracking-wide">
               ✕ Postpone to V2 (Common Waste)
-            </div>
+            </h3>
             <ul className="text-xs sm:text-sm text-mosano-navy/80 space-y-2.5">
               <li className="flex items-start gap-2.5">
                 <span className="text-red-500 font-bold text-base leading-none">•</span>
@@ -368,9 +481,9 @@ export const CostGuideContent: React.FC<CostGuideContentProps> = ({
           </div>
 
           <div className="p-6 rounded-2xl bg-emerald-50/40 border border-emerald-200 shadow-sm space-y-4">
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-emerald-100 text-emerald-800 font-bold text-xs uppercase tracking-wide">
+            <h3 className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-emerald-100 text-emerald-800 font-bold text-xs uppercase tracking-wide">
               ✓ Non-Negotiable for V1 (High ROI)
-            </div>
+            </h3>
             <ul className="text-xs sm:text-sm text-mosano-navy/80 space-y-2.5">
               <li className="flex items-start gap-2.5">
                 <span className="text-emerald-600 font-bold text-base leading-none">•</span>
@@ -491,58 +604,232 @@ export const CostGuideContent: React.FC<CostGuideContentProps> = ({
             },
           ].map((item, index) => {
             const isOpen = openFaq === index;
+            const questionId = `faq-question-${index}`;
+            const answerId = `faq-answer-${index}`;
             return (
               <div
                 key={index}
                 className="rounded-2xl border border-mosano-border bg-white overflow-hidden transition-all shadow-sm hover:border-mosano-blue/30"
               >
-                <button
-                  type="button"
-                  onClick={() => toggleFaq(index)}
-                  className="w-full p-5 text-left flex items-center justify-between gap-4 font-bold text-mosano-navy hover:text-mosano-blue transition-colors text-sm sm:text-base"
+                <h3 className="m-0">
+                  <button
+                    id={questionId}
+                    type="button"
+                    aria-expanded={isOpen}
+                    aria-controls={answerId}
+                    onClick={() => toggleFaq(index)}
+                    className="w-full p-5 text-left flex items-center justify-between gap-4 font-bold text-mosano-navy hover:text-mosano-blue transition-colors text-sm sm:text-base"
+                  >
+                    <span>{item.q}</span>
+                    {isOpen ? (
+                      <ChevronUp className="w-4 h-4 text-mosano-magenta flex-shrink-0" />
+                    ) : (
+                      <ChevronDown className="w-4 h-4 text-gray-400 flex-shrink-0" />
+                    )}
+                  </button>
+                </h3>
+                <div
+                  id={answerId}
+                  role="region"
+                  aria-labelledby={questionId}
+                  className={`px-5 pb-5 text-xs sm:text-sm text-mosano-navy/75 leading-relaxed border-t border-mosano-border/40 pt-3 ${
+                    isOpen ? "block" : "hidden"
+                  }`}
                 >
-                  <span>{item.q}</span>
-                  {isOpen ? (
-                    <ChevronUp className="w-4 h-4 text-mosano-magenta flex-shrink-0" />
-                  ) : (
-                    <ChevronDown className="w-4 h-4 text-gray-400 flex-shrink-0" />
-                  )}
-                </button>
-                {isOpen && (
-                  <div className="px-5 pb-5 text-xs sm:text-sm text-mosano-navy/75 leading-relaxed border-t border-mosano-border/40 pt-3">
-                    {item.a}
-                  </div>
-                )}
+                  {item.a}
+                </div>
               </div>
             );
           })}
         </div>
       </section>
 
-      {/* Mid-Content Scoping CTA */}
-      <div className="p-8 sm:p-10 lg:p-12 rounded-3xl bg-mosano-navy text-white relative overflow-hidden shadow-2xl border border-mosano-blue/30">
-        <div className="relative z-10 max-w-xl space-y-4">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 text-mosano-yellow text-xs font-bold uppercase tracking-wider">
-            <span>Next Step</span>
+      {/* Next Step Section with Inline Contact Form */}
+      <div
+        id="contact-form"
+        className="scroll-mt-28 p-8 sm:p-10 lg:p-12 rounded-3xl bg-mosano-navy text-white relative overflow-hidden shadow-2xl border border-mosano-blue/30"
+      >
+        <div className="relative z-10 space-y-6">
+          <div className="max-w-2xl space-y-4">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 text-mosano-yellow text-xs font-bold uppercase tracking-wider">
+              <span>Next Step</span>
+            </div>
+            <h2 className="text-2xl sm:text-3xl font-black text-white leading-tight">
+              Ready to Scope Your Version 1?
+            </h2>
+            <p className="text-sm text-white/80 leading-relaxed">
+              Get a tailored technical breakdown from our senior engineering leads. We review your concept and map out a lean 4 to 8 week launch roadmap.
+            </p>
           </div>
-          <h3 className="text-2xl sm:text-3xl font-black text-white leading-tight">
-            Ready to Scope Your Version 1?
-          </h3>
-          <p className="text-sm text-white/80 leading-relaxed">
-            Get a tailored technical breakdown from our senior engineering leads. We review your concept and map out a lean 4 to 8 week launch roadmap.
-          </p>
-          <div className="pt-2">
-            <button
-              type="button"
-              onClick={() => {
-                trackCTAClick("mid_content_banner", "schedule_scoping_session");
-                onOpenContact();
-              }}
-              className="px-6 py-3.5 rounded-xl bg-mosano-magenta hover:bg-pink-600 text-white font-bold text-sm sm:text-base transition-all shadow-lg flex items-center gap-2 group active:scale-95"
-            >
-              <span>Discuss Your MVP Scope</span>
-              <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-            </button>
+
+          <div className="w-full max-w-2xl bg-white text-mosano-navy rounded-2xl shadow-xl border border-mosano-border overflow-hidden">
+            {submitted ? (
+              /* Confirmation View */
+              <div className="p-8 sm:p-10 text-center space-y-5">
+                <div className="w-16 h-16 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto shadow-inner">
+                  <CheckCircle2 className="w-10 h-10" />
+                </div>
+
+                <div className="space-y-2">
+                  <span className="text-xs font-bold text-mosano-magenta tracking-wider uppercase">
+                    Inquiry Dispatched
+                  </span>
+                  <h3 className="text-2xl sm:text-3xl font-black text-mosano-navy">
+                    Scope Received. Let’s Build.
+                  </h3>
+                  <p className="text-sm text-mosano-navy/80 leading-relaxed max-w-md mx-auto">
+                    Thank you, <strong>{formData.name}</strong>. Our engineering leads have received your scope specifications. We will review your architecture requirements and reach out within 24 business hours.
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-mosano-surface border border-mosano-border text-left text-xs space-y-2 max-w-sm mx-auto">
+                  <div className="font-bold text-mosano-navy flex items-center gap-1.5">
+                    <Sparkles className="w-4 h-4 text-mosano-blue" />
+                    <span>Next Steps in Our Process:</span>
+                  </div>
+                  <p className="text-mosano-navy/70 leading-relaxed">
+                    1. Initial technical fit assessment by a Mosano Solutions Architect.
+                    <br />
+                    2. Direct calendar invite for a 30-minute discovery session.
+                    <br />
+                    3. Delivery of a concrete sprint roadmap &amp; fixed-price scoping.
+                  </p>
+                </div>
+              </div>
+            ) : (
+              /* Lead Capture Form */
+              <div>
+                {selectedScope && (
+                  <div className="bg-mosano-surface px-6 sm:px-8 pt-6 pb-4 border-b border-mosano-border/70">
+                    <div className="p-3 rounded-xl bg-white border border-mosano-blue/20 shadow-sm flex items-center justify-between flex-wrap gap-2 text-xs">
+                      <div>
+                        <span className="text-[11px] font-bold text-mosano-blue block uppercase">
+                          Calculated Scope Snapshot:
+                        </span>
+                        <span className="font-bold text-mosano-navy">
+                          {selectedScope.platformLabel} • {selectedScope.aiLabel}
+                        </span>
+                      </div>
+                      <div className="text-right font-black text-mosano-magenta text-sm">
+                        {selectedScope.currencySymbol}
+                        {selectedScope.priceMin.toLocaleString()} – {selectedScope.currencySymbol}
+                        {selectedScope.priceMax.toLocaleString()}
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                <form onSubmit={handleSubmit} className="p-6 sm:p-8 space-y-4">
+                  {errorMessage && (
+                    <div className="p-3.5 rounded-xl bg-red-50 border border-red-200 text-red-700 text-xs flex items-center gap-2">
+                      <AlertCircle className="w-4 h-4 flex-shrink-0" />
+                      <span>{errorMessage}</span>
+                    </div>
+                  )}
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-xs font-bold text-mosano-navy mb-1.5">
+                        Your Full Name <span className="text-mosano-magenta">*</span>
+                      </label>
+                      <div className="relative">
+                        <User className="w-4 h-4 text-gray-400 absolute left-3 top-3" />
+                        <input
+                          type="text"
+                          name="name"
+                          required
+                          placeholder="e.g. Sofia Martins"
+                          value={formData.name}
+                          onChange={handleInputChange}
+                          className="w-full pl-9 pr-3 py-2.5 rounded-xl border border-mosano-border focus:border-mosano-blue focus:ring-2 focus:ring-mosano-blue/20 text-sm text-mosano-navy outline-none transition-all"
+                        />
+                      </div>
+                    </div>
+
+                    <div>
+                      <label className="block text-xs font-bold text-mosano-navy mb-1.5">
+                        Work Email Address <span className="text-mosano-magenta">*</span>
+                      </label>
+                      <div className="relative">
+                        <Mail className="w-4 h-4 text-gray-400 absolute left-3 top-3" />
+                        <input
+                          type="email"
+                          name="email"
+                          required
+                          placeholder="founder@startup.com"
+                          value={formData.email}
+                          onChange={handleInputChange}
+                          className="w-full pl-9 pr-3 py-2.5 rounded-xl border border-mosano-border focus:border-mosano-blue focus:ring-2 focus:ring-mosano-blue/20 text-sm text-mosano-navy outline-none transition-all"
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-xs font-bold text-mosano-navy mb-1.5">
+                        Startup / Project Name
+                      </label>
+                      <div className="relative">
+                        <Building className="w-4 h-4 text-gray-400 absolute left-3 top-3" />
+                        <input
+                          type="text"
+                          name="projectName"
+                          placeholder="e.g. NextGen Copilot"
+                          value={formData.projectName}
+                          onChange={handleInputChange}
+                          className="w-full pl-9 pr-3 py-2.5 rounded-xl border border-mosano-border focus:border-mosano-blue focus:ring-2 focus:ring-mosano-blue/20 text-sm text-mosano-navy outline-none transition-all"
+                        />
+                      </div>
+                    </div>
+
+                    <div>
+                      <label className="block text-xs font-bold text-mosano-navy mb-1.5">
+                        Target Release Date
+                      </label>
+                      <div className="relative">
+                        <Calendar className="w-4 h-4 text-gray-400 absolute left-3 top-3" />
+                        <select
+                          name="launchGoal"
+                          value={formData.launchGoal}
+                          onChange={handleInputChange}
+                          className="w-full pl-9 pr-3 py-2.5 rounded-xl border border-mosano-border focus:border-mosano-blue focus:ring-2 focus:ring-mosano-blue/20 text-sm text-mosano-navy outline-none transition-all bg-white"
+                        >
+                          <option value="4–8 weeks (ASAP)">4–8 weeks (ASAP)</option>
+                          <option value="2–3 months">2–3 months</option>
+                          <option value="Q3/Q4 2026">Later in 2026</option>
+                          <option value="Exploring & Planning">Just budgeting for now</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Submit Button */}
+                  <button
+                    type="submit"
+                    disabled={loading}
+                    className="w-full mt-2 py-3.5 px-6 rounded-xl bg-mosano-blue hover:bg-mosano-navy text-white font-bold text-sm transition-all shadow-lg hover:shadow-mosano-hover flex items-center justify-center gap-2 disabled:opacity-50 active:scale-[0.99]"
+                  >
+                    {loading ? (
+                      <>
+                        <Loader2 className="w-4 h-4 animate-spin" />
+                        <span>Transmitting scope to Mosano...</span>
+                      </>
+                    ) : (
+                      <>
+                        <Send className="w-4 h-4 text-mosano-yellow" />
+                        <span>request technical scoping review</span>
+                      </>
+                    )}
+                  </button>
+
+                  <div className="flex items-center justify-center gap-2 text-[11px] text-mosano-navy/60 pt-1">
+                    <Lock className="w-3 h-3 text-mosano-magenta" />
+                    <span>Confidential. Non-disclosure agreement guaranteed upon request.</span>
+                  </div>
+                </form>
+              </div>
+            )}
           </div>
         </div>
 

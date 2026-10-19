@@ -20,21 +20,25 @@ const SECTIONS: NavSection[] = [
 
 export const SideDotNav: React.FC = () => {
   const [activeSection, setActiveSection] = useState<string>("overview");
+  const isProgrammaticScrollRef = React.useRef(false);
+  const scrollTimeoutRef = React.useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     const handleScroll = () => {
+      if (isProgrammaticScrollRef.current) return;
+
       // If near the very top of the page, always highlight Overview
       if (window.scrollY < 200) {
         setActiveSection("overview");
         return;
       }
 
-      const headerOffset = 100;
+      const headerOffset = 120;
       for (let i = SECTIONS.length - 1; i >= 0; i--) {
         const section = document.getElementById(SECTIONS[i].id);
         if (section) {
           const rect = section.getBoundingClientRect();
-          if (rect.top <= headerOffset + 50) {
+          if (rect.top <= headerOffset + 80) {
             setActiveSection(SECTIONS[i].id);
             break;
           }
@@ -45,36 +49,56 @@ export const SideDotNav: React.FC = () => {
     window.addEventListener("scroll", handleScroll, { passive: true });
     handleScroll(); // run once on mount
 
-    return () => window.removeEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      if (scrollTimeoutRef.current) {
+        clearTimeout(scrollTimeoutRef.current);
+      }
+    };
   }, []);
 
-  const scrollToSection = (id: string) => {
+  const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
     const el = document.getElementById(id);
     if (el) {
+      e.preventDefault();
+      isProgrammaticScrollRef.current = true;
+      setActiveSection(id);
+
+      if (typeof window !== "undefined") {
+        sessionStorage.setItem("mosano_lead_auto_popped", "true");
+        window.history.replaceState(null, "", `#${id}`);
+      }
+
       const headerOffset = 88;
       const elementPosition = el.getBoundingClientRect().top + window.scrollY;
-      const offsetPosition = elementPosition - headerOffset;
+      const offsetPosition = Math.max(0, elementPosition - headerOffset);
 
       window.scrollTo({
         top: offsetPosition,
         behavior: "smooth",
       });
-      setActiveSection(id);
+
+      if (scrollTimeoutRef.current) {
+        clearTimeout(scrollTimeoutRef.current);
+      }
+      scrollTimeoutRef.current = setTimeout(() => {
+        isProgrammaticScrollRef.current = false;
+      }, 800);
     }
   };
 
   return (
     <nav
       aria-label="Page section navigation"
-      className="fixed right-6 top-1/2 -translate-y-1/2 z-40 hidden xl:flex flex-col items-center bg-white/90 backdrop-blur-md p-2 rounded-full border border-mosano-border shadow-lg space-y-3 transition-all"
+      className="fixed right-6 top-1/2 -translate-y-1/2 z-40 hidden lg:flex flex-col items-center bg-white/90 backdrop-blur-md p-2 rounded-full border border-mosano-border shadow-lg space-y-3 transition-all"
     >
       {SECTIONS.map((section) => {
         const isActive = activeSection === section.id;
         return (
-          <button
+          <a
             key={section.id}
-            type="button"
-            onClick={() => scrollToSection(section.id)}
+            href={`#${section.id}`}
+            onClick={(e) => scrollToSection(e, section.id)}
             aria-label={`Scroll to ${section.label}`}
             className="group relative flex items-center justify-center w-7 h-7 rounded-full focus:outline-none"
           >
@@ -93,7 +117,7 @@ export const SideDotNav: React.FC = () => {
               {/* Arrow pointing right */}
               <div className="absolute left-full top-1/2 -translate-y-1/2 border-4 border-transparent border-l-mosano-navy" />
             </div>
-          </button>
+          </a>
         );
       })}
     </nav>

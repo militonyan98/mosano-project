@@ -24,11 +24,9 @@ export const Navbar: React.FC<NavbarProps> = ({
           href="https://mosano.eu"
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center gap-3 group"
+          className="brand-2 w-nav-brand w--current"
         >
-          <div className="relative flex items-center">
-            <MosanoLogo height={28} className="transition-transform group-hover:scale-105" />
-          </div>
+          <MosanoLogo height={32} className="header-logo" />
         </a>
 
 
@@ -52,9 +50,10 @@ export const Navbar: React.FC<NavbarProps> = ({
           </button>
 
           {/* Primary CTA */}
-          <button
-            type="button"
-            onClick={() => {
+          <a
+            href="#contact-form"
+            onClick={(e) => {
+              e.preventDefault();
               trackCTAClick("navbar", "scoping_session");
               onOpenContact();
             }}
@@ -63,7 +62,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             <span>discuss your mvp</span>
             <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
             <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-mosano-magenta transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left" />
-          </button>
+          </a>
         </div>
       </div>
     </header>

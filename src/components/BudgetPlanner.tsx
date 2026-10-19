@@ -199,19 +199,14 @@ export const BudgetPlanner: React.FC<BudgetPlannerProps> = ({
         <div className="space-y-1">
           <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-mosano-blue/10 text-mosano-blue font-bold text-[11px] uppercase tracking-wider">
             <Sparkles className="w-3 h-3 text-mosano-magenta" />
-            <span>Interactive Estimator</span>
+            <span>Real-Time Estimator</span>
           </div>
-          <h3 className="text-2xl sm:text-3xl font-black text-mosano-navy tracking-tight">
+          <h2 className="text-2xl sm:text-3xl font-black text-mosano-navy tracking-tight">
             MVP Budget Calculator
-          </h3>
+          </h2>
           <p className="text-xs sm:text-sm text-mosano-navy/70">
             Calibrate your MVP scope, target platforms, and AI complexity for real-time cost brackets.
           </p>
-        </div>
-
-        <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white border border-mosano-border text-xs font-semibold text-mosano-navy shadow-sm">
-          <Clock className="w-3.5 h-3.5 text-mosano-blue" />
-          <span>Instant 2026 Studio Model</span>
         </div>
       </div>
 
@@ -406,9 +401,10 @@ export const BudgetPlanner: React.FC<BudgetPlannerProps> = ({
                 </div>
 
                 {/* CTA Button */}
-                <button
-                  type="button"
-                  onClick={() => {
+                <a
+                  href="#contact-form"
+                  onClick={(e) => {
+                    e.preventDefault();
                     trackCTAClick("calculator_slider", "discuss_calculated_scope", {
                       platform: plannerState.platform,
                       screens: plannerState.screens,
@@ -420,7 +416,7 @@ export const BudgetPlanner: React.FC<BudgetPlannerProps> = ({
                 >
                   <span>discuss your mvp</span>
                   <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-                </button>
+                </a>
 
                 <p className="text-[10px] text-white/50 text-center leading-tight">
                   Transparent preliminary estimate. Not a binding quote. Mosano guarantees fixed-sprint scoping before any contractual commitment.
